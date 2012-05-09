@@ -30,14 +30,17 @@ class UwEvents {
   public function parse($url, $opts=array()) {
     // Merge the defaults and the user supplied options
     $defaults = array(
-      'limit' => 10
+      'limit' => 5,
+      'title' => 'Events',
+      'show_description' => TRUE,
     );
     $opts = array_merge($defaults, $opts);
 
     if ( $data = $this->getRemote($url, $opts) ) {
-      $out = '<ul class="uw_events">';
+      $out = '<h2 class="uw_events_title">' . $opts['title'] . "</h2>\n";
+      $out .= '<ul class="uw_events">';
       foreach ( $data->data->events as $event ) {
-        $out .= $this->eventHtml($event);
+        $out .= $this->eventHtml($event, $opts);
       }
       $out .= '</ul>';
       return $out;
@@ -56,8 +59,17 @@ class UwEvents {
    *  Returns the <li> string for the event object
    *
    */
-  public function eventHtml($event) {
-    return '<li class="uw_event"><span class="uw_event_title">' . $event->title . '</span></li>';
+  public function eventHtml($event, $opts=array()) {
+    $out = '<li class="uw_event">';
+    $out .= '<span class="uw_event_title">' . $event->title . '</span>';
+    if ( ! empty($event->subtitle) )
+      $out .= '<span class="uw_event_subtitle">' . $event->subtitle . '</span>';
+    if ( $opts['show_description'] ) {
+      if ( ! empty($event->description) )
+        $out .= '<span class="uw_event_description">' . $event->description . '</span>';
+    }
+    $out .= '</li>';
+    return $out;
   }
 
   /**
@@ -117,7 +129,7 @@ class UwEvents {
    *  Return a full url string
    */
   public function buildUrl($parsed_url, $opts=array()) {
-    $query = empty($opts) ? '' : '?' . http_build_query($opts);
+    $query = !isset($opts['limit']) ? '' : '?limit=' . (int) $opts['limit'];
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
   }
 
