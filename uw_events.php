@@ -20,7 +20,7 @@ require_once(dirname(__FILE__) . '/lib/uw_events.class.php');
  *  Returns an instantiated UwEvents object, runs ->init() the first time
  *
  */
-function uw_events() {
+function uw_events_object() {
   static $uw_events_saved;
 
   if ( $uw_events_saved )
@@ -33,4 +33,36 @@ function uw_events() {
 
   return $uw_events_saved;
 }
-uw_events(); // Run the factory function
+uw_events_object(); // Run the factory function
+
+/**
+ * Helper functions for the wordpress theme
+ */
+
+/**
+ * Return the html for an events calendar url
+ *
+ * @param $url {string}
+ * @param $opts {array}
+ *
+ * @return {string}
+ *  Returns the html for the events url
+ *
+ */
+function uw_events($url, $opts=array()) {
+  return uw_events_object()->parse($url, $opts);
+}
+
+/**
+ * Helper function to pull remote event data
+ *
+ * @param $url {string}
+ * @param $opts {array}
+ *
+ * @return {object}
+ *  Returns an object for the data returned or false
+ *
+ */
+function uw_events_get_remote($url, $opts=array()) {
+  return uw_events_object()->getRemote($url, $opts);
+}
