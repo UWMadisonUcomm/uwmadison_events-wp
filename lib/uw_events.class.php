@@ -28,14 +28,7 @@ class UwEvents {
    *
    */
   public function parse($url, $opts=array()) {
-    // Merge the defaults and the user supplied options
-    $defaults = array(
-      'limit' => 5,
-      'title' => 'Events',
-      'show_description' => TRUE,
-    );
-    $opts = array_merge($defaults, $opts);
-
+    $opts = $this->sanitizeOpts($opts);
     if ( $data = $this->getRemote($url, $opts) ) {
       $out = '<h2 class="uw_events_title">' . $opts['title'] . "</h2>\n";
       $out .= '<ul class="uw_events">';
@@ -60,6 +53,8 @@ class UwEvents {
    *
    */
   public function eventHtml($event, $opts=array()) {
+    $opts = $this->sanitizeOpts($opts); // sanitize the options
+
     $out = '<li class="uw_event">';
     $out .= '<span class="uw_event_title">' . $event->title . '</span>';
     if ( ! empty($event->subtitle) )
@@ -80,6 +75,8 @@ class UwEvents {
    *  Returns an array of data or FALSE
    */
   public function getRemote($url, $opts=array()) {
+    $opts = $this->sanitizeOpts($opts); // Sanitize the options
+
     if ( $parsed_url = $this->parseUrl($url) ) {
       $get = wp_remote_get($this->buildUrl($parsed_url, $opts));
       if ( isset($get['body']) && !empty($get['body']) ) {
@@ -129,6 +126,8 @@ class UwEvents {
    *  Return a full url string
    */
   public function buildUrl($parsed_url, $opts=array()) {
+    $opts = $this->sanitizeOpts($opts); // Sanitize the options
+
     $query = !isset($opts['limit']) ? '' : '?limit=' . (int) $opts['limit'];
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
   }
@@ -142,5 +141,34 @@ class UwEvents {
    */
   private function stripExtension($s) {
     return preg_replace('~\.(json|html|rss|rss2|xml)$~i', '', $s);
+  }
+
+  /**
+   * Sanitize the opts array and inject defaults
+   *
+   * @param $opts {array}
+   * @return {array}
+   *  Return a sanitized and default injected options array
+   */
+  private function sanitizeOpts($opts) {
+    // Validate the limit
+    if ( isset($opts['limit']) && (int) $opts['limit'] < 1 ) {
+      unset($opts['limit']);
+    }
+    else {
+      $opts['limit'] = (int) $opts['limit'];
+    }
+
+    // Defaults
+    $defaults = array(
+      'limit' => 5,
+      'title' => 'Events',
+      'show_description' => FALSE,
+    );
+
+    // Merge in the defaults
+    $opts = array_merge($defaults, $opts);
+
+    return $opts;
   }
 }

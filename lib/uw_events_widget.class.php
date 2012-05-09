@@ -40,11 +40,7 @@ class UwEventsWidget extends WP_Widget {
    */
   public function widget( $args, $instance ) {
     $out = '<aside class="widget widget_meta">';
-    $opts = array();
-    if ( (int) $instance['limit'] >= 1 )
-      $opts['limit'] = (int) $instance['limit'];
-
-    if ( $parsed = $this->uwe->parse($instance['url'], $opts) ) {
+    if ( $parsed = $this->uwe->parse($instance['url'], $instance) ) {
       $out .= $parsed;
     }
     else {
