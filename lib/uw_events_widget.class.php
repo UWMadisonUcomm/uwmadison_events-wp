@@ -19,7 +19,9 @@ class UwEventsWidget extends WP_Widget {
    */
   public function form( $instance ) {
     $url = isset($instance['url']) ? $instance['url'] : '';
-    echo $this->generateInput('url', $url);
+    $limit = isset($instance['limit']) ? $instance['limit'] : '';
+    echo $this->generateInput('url', 'Url:', $url);
+    echo $this->generateInput('limit', 'Limit:', $limit);
     return true;
   }
 
@@ -28,6 +30,7 @@ class UwEventsWidget extends WP_Widget {
    */
   public function update( $new_instance, $old_instance ) {
     // processes widget options to be saved
+    // Validate options here
     $instance = wp_parse_args( $new_instance, $old_instance );
     return $instance;
   }
@@ -37,7 +40,11 @@ class UwEventsWidget extends WP_Widget {
    */
   public function widget( $args, $instance ) {
     $out = '<aside class="widget widget_meta">';
-    if ( $parsed = $this->uwe->parse($instance['url']) ) {
+    $opts = array();
+    if ( (int) $instance['limit'] >= 1 )
+      $opts['limit'] = (int) $instance['limit'];
+
+    if ( $parsed = $this->uwe->parse($instance['url'], $opts) ) {
       $out .= $parsed;
     }
     else {
@@ -48,8 +55,8 @@ class UwEventsWidget extends WP_Widget {
   }
 
   // Helper to generate single line input structures
-  private function generateInput($field, $default='', $type='text') {
-    $out = '<label for="' . $this->get_field_id($field) . '">URL:</label>';
+  private function generateInput($field, $label, $default='', $type='text') {
+    $out = '<label for="' . $this->get_field_id($field) . '">' . $label . '</label> ';
     $out .= '<input type="'.$type.'" class="widefat" id="' . $this->get_field_id($field) . '" name="' .
       $this->get_field_name($field) . '" value="' . esc_attr($default) .'" />';
     return $out;
@@ -60,9 +67,16 @@ class UwEventsWidget extends WP_Widget {
     // checkbox field
   }
 
-  // We will possibly need this as well
-  private function generateSelect($field, $options=array(), $selected='') {
-    // select field
+  // Early select box renderer
+  private function generateSelect($field, $label, $options=array(), $selected='') {
+    $selected = esc_attr($selected);
+    $out = '<label for="' . $this->get_field_id($field) . '">'. $label . '</label> ';
+    $out .= '<select name="' . $this->get_field_name($field) . '" id="' . $this->get_field_id($field) .'">';
+    foreach($options as $o) {
+      $out .= '<option value="' . $o . '">' . $o . '</option>';
+    }
+    $out .= "</select>";
+    return $out;
   }
 }
 
