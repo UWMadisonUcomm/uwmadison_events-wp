@@ -15,8 +15,10 @@ require_once(dirname(__FILE__) . '/lib/uw_events.class.php');
 
 /**
  * Factory function for the UwEvents class
- * @return object
+ *
+ * @return {object}
  *  Returns an instantiated UwEvents object, runs ->init() the first time
+ *
  */
 function uw_events() {
   static $uw_events_saved;
