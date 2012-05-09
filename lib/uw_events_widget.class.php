@@ -19,7 +19,7 @@ class UwEventsWidget extends WP_Widget {
    */
   public function form( $instance ) {
     $url = isset($instance['url']) ? $instance['url'] : '';
-    $limit = isset($instance['limit']) ? $instance['limit'] : '';
+    $limit = isset($instance['limit']) ? $instance['limit'] : '5';
     echo $this->generateInput('url', 'Url:', $url);
     echo $this->generateInput('limit', 'Limit:', $limit);
     return true;
@@ -29,8 +29,11 @@ class UwEventsWidget extends WP_Widget {
    * Update the instance options
    */
   public function update( $new_instance, $old_instance ) {
+    // Validations
+    if (isset($new_instance['limit']) && (int) $new_instance['limit'] < 1 )
+      unset($new_instance['limit']);
+
     // processes widget options to be saved
-    // Validate options here
     $instance = wp_parse_args( $new_instance, $old_instance );
     return $instance;
   }
