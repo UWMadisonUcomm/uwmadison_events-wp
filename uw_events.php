@@ -34,7 +34,8 @@ function uw_events_object() {
   return $uw_events_saved;
 }
 uw_events_object(); // Run the factory function
-// Load our widget
+
+// Load our widget class after we've instantiated UwEvents
 require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
 
 /**
