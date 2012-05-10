@@ -21,7 +21,7 @@ require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
  *  Returns an instantiated UwEvents object, runs ->init() the first time
  *
  */
-function uw_events_object() {
+function &uw_events_object() {
   static $uw_events_saved;
 
   if ( $uw_events_saved )
