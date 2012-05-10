@@ -1,3 +1,8 @@
 ## UW-Madison Events Calendar Wordpress Plugin ##
 
-This will do events calendar related things.
+This plugin currently supplies a widget, and theme function. It should eventually supply a shortcode as well.
+
+### Theme function ###
+
+    <?php echo uw_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
+
