@@ -18,13 +18,19 @@ class UwEventsWidget extends WP_Widget {
    * The options form
    */
   public function form( $instance ) {
-    $url = isset($instance['url']) ? $instance['url'] : '';
-    $limit = isset($instance['limit']) ? $instance['limit'] : '5';
-    $title = isset($instance['title']) ? $instance['title'] : 'Events';
+    // Defaults
+    $url        =     isset($instance['url']) ? $instance['url'] : '';
+    $limit      =     isset($instance['limit']) ? $instance['limit'] : '5';
+    $title      =     isset($instance['title']) ? $instance['title'] : 'Events';
+    $grouped    =     isset($instance['grouped']) ? $instance['grouped'] : '0';
+
+    // Build the form
     echo $this->generateInput('title', 'Title:', $title);
     echo $this->generateInput('url', 'Url:', $url);
     echo $this->generateInput('limit', 'Limit:', $limit);
-    return true;
+    echo $this->generateCheckbox('grouped', 'Group results:', $grouped);
+
+    return TRUE;
   }
 
   /**
@@ -34,6 +40,14 @@ class UwEventsWidget extends WP_Widget {
     // Validations
     if (isset($new_instance['limit']) && (int) $new_instance['limit'] < 1 )
       unset($new_instance['limit']);
+
+    // Sanitize grouped
+    if ( isset($new_instance['grouped']) && $new_instance['grouped'] == '1' ) {
+      $new_instance['grouped'] = '1';
+    }
+    else {
+      $new_instance['grouped'] = '0';
+    }
 
     // processes widget options to be saved
     $instance = wp_parse_args( $new_instance, $old_instance );
@@ -56,7 +70,9 @@ class UwEventsWidget extends WP_Widget {
     print $out;
   }
 
-  // Helper to generate single line input structures
+  /**
+   * Helper to generate a text input
+   */
   private function generateInput($field, $label, $default='', $type='text') {
     $out = '<label for="' . $this->get_field_id($field) . '">' . $label . '</label> ';
     $out .= '<input type="'.$type.'" class="widefat" id="' . $this->get_field_id($field) . '" name="' .
@@ -64,12 +80,18 @@ class UwEventsWidget extends WP_Widget {
     return $out;
   }
 
-  // We will possibly need this
-  private function generateCheckbox($field, $default='') {
-    // checkbox field
+  /**
+   * Helper to generate a checkbox
+   */
+  private function generateCheckbox($field, $label, $default='') {
+    $checked = ($default == '1') ? ' CHECKED' : '';
+    $out = '<label for="' . $this->get_field_id($field) . '">' . $label . '</label> ';
+    $out .= "<input type=\"checkbox\" name=\"{$this->get_field_name($field)}\" value=\"1\" id=\"{$this->get_field_id($field)}\"$checked>";
+    return $out;
   }
 
   // Early select box renderer
+  // Not developed fully yet, don't use it
   private function generateSelect($field, $label, $options=array(), $selected='') {
     $selected = esc_attr($selected);
     $out = '<label for="' . $this->get_field_id($field) . '">'. $label . '</label> ';
