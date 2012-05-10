@@ -11,6 +11,7 @@ This plugin currently supplies a widget, and theme function. It should eventuall
     Here are my 4 newest events within post content:
 
     [uw_events url=http://today.wisc.edu/events/tag/film limit=4]
+    [uw_events url=http://today.wisc.edu/events/tag/film limit=10 grouped=1 title="Film Events" show_description=1]
 
 ### Lower level helper functions ###
 
