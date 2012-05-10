@@ -140,6 +140,10 @@ class UwEvents {
     }
     $out .= ' ' . $event->formatted_dates['default'];
     $out .= '</li>';
+
+    // Let the user apply filters to the <li> for each event
+    $out = apply_filters('uw_events_event_html', $out, $event, $opts);
+
     return $out;
   }
 
