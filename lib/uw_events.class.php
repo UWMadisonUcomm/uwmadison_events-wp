@@ -2,17 +2,30 @@
 
 class UwEvents {
   // The events calendar base API url
-  public $api_base = 'http://today.wisc.edu';
+  public $api_base;
 
   // Define the date formats to use
-  public $date_formats = array(
-    'default' => '<span class="uw_event_date">%c</span>',
-    'db' => '%D'
-  );
+  public $date_formats;
 
-  // Constructor
+  // Cache expiration in seconds
+  public $cache_expiration;
+
+  /**
+   * Constructor function
+   * Set the default instance variables
+   */
   public function __construct() {
-    // Constructor code
+    // API Base
+    $this->api_base = 'http://today.wisc.edu';
+
+    // Set the default date formats
+    $this->date_formats = array(
+      'default' => '<span class="uw_event_date">%c</span>',
+      'db' => '%D'
+    );
+
+    // Default the cache to 15 minutes
+    $this->cache_expiration = 60 * 15;
   }
 
   /**
@@ -100,14 +113,28 @@ class UwEvents {
     $opts = $this->sanitizeOpts($opts); // Sanitize the options
 
     if ( $parsed_url = $this->parseUrl($url) ) {
-      $get = wp_remote_get($this->buildUrl($parsed_url, $opts));
+      // Build the parsed URL into a url with query params
+      $built_url = $this->buildUrl($parsed_url, $opts);
+
+      // Define the cache key
+      $cache_key = $this->transientKey($built_url);
+
+      // If we already have data for the cache key, return it now
+      if ( ($cached = get_transient($cache_key)) !== FALSE )
+        return $cached;
+
+      // Retrieve the remote data if we don't have a cached copy
+      $get = wp_remote_get($built_url);
       if ( isset($get['body']) && !empty($get['body']) ) {
         $data = $this->processRemoteData($get['body']);
-        return (object) array(
+        $out = (object) array(
           'method' => $parsed_url['method'],
           'id' => $parsed_url['id'],
+          'timestamp' => time(),
           'data' => $data,
         );
+        set_transient($cache_key, $out, $this->cache_expiration);
+        return $out;
       }
       else {
         return FALSE;
@@ -199,6 +226,11 @@ class UwEvents {
 
     $query = !isset($opts['limit']) ? '' : '?limit=' . (int) $opts['limit'];
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
+  }
+
+  // Quickly build a unique transient key
+  private function transientKey($url) {
+    return "uwe_r" . md5($url);
   }
 
   /**
