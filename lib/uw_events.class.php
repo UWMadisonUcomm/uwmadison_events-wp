@@ -80,10 +80,10 @@ class UwEvents {
     $out = '<li class="uw_event">';
     $out .= '<span class="uw_event_title">' . $event->title . '</span>';
     if ( ! empty($event->subtitle) )
-      $out .= '<span class="uw_event_subtitle">' . $event->subtitle . '</span>';
+      $out .= ' <span class="uw_event_subtitle">' . $event->subtitle . '</span>';
     if ( $opts['show_description'] ) {
       if ( ! empty($event->description) )
-        $out .= '<span class="uw_event_description">' . $event->description . '</span>';
+        $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
     }
     $out .= '</li>';
     return $out;
