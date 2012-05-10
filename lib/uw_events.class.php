@@ -42,7 +42,6 @@ class UwEvents {
     add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
     // A short code wrapper for ::parse()
     add_shortcode( 'uw_events', array( &$this, 'shortCode') );
-    add_filter('uw_events_event_link', array(&$this, 'eventLink'), 10, 2);
     // Enqueue our stylesheet
     wp_enqueue_style( 'uw_events', plugins_url($this->plugin_name . '/stylesheets/uw_events.css') );
   }
@@ -100,7 +99,8 @@ class UwEvents {
   public function eventHtml($event, $opts=array()) {
     $opts = $this->sanitizeOpts($opts); // sanitize the options
 
-    $event_link = apply_filters('uw_events_event_link', '#', $event);
+    // Allow others to filter the event link, pass the event object as a second param
+    $event_link = apply_filters('uw_events_event_link', $this->eventLink($event), $event);
 
     $out = '<li class="uw_event">';
     $out .= '<span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
@@ -115,8 +115,16 @@ class UwEvents {
     return $out;
   }
 
-  public function eventLink($link, $event) {
-    return 'http://today.wisc.edu/events/view/' . $event->id;
+  /**
+   * Create the link for an event from an event object
+   * This default is filterable
+   *
+   * @param $event {object}
+   * @return {string}
+   *  Return the link for a specific event
+   */
+  public function eventLink($event) {
+    return $this->api_base . '/events/view/' . $event->id;
   }
 
   /**
