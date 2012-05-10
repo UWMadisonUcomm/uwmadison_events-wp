@@ -10,7 +10,7 @@ class UwEventsWidget extends WP_Widget {
         array( 'description' => 'UW-Madison events calendar widget', ) // args
       );
 
-    // Shortcut to acess the isntantiated UwEvents object
+    // Shortcut to acess the instantiated UwEvents object
     $this->uwe = uw_events_object();
   }
 
