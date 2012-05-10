@@ -5,3 +5,9 @@ This plugin currently supplies a widget, and theme function. It should eventuall
 ### Theme function ###
 
     <?php uw_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
+
+### Shortcode ###
+
+    Here are my 4 newest events within post content:
+
+    [uw_events url=http://today.wisc.edu/events/tag/film limit=4]
