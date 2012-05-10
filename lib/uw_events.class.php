@@ -36,6 +36,7 @@ class UwEvents {
     add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
     // A short code wrapper for ::parse()
     add_shortcode( 'uw_events', array( &$this, 'shortCode') );
+    add_filter('uw_events_event_link', array(&$this, 'eventLink'), 10, 2);
   }
 
   /**
@@ -48,6 +49,7 @@ class UwEvents {
    */
   public function shortCode($atts) {
     $url = $atts['url'];
+    $atts['source'] = 'shortcode';
     return $this->parse($url, $atts);
   }
 
@@ -90,8 +92,10 @@ class UwEvents {
   public function eventHtml($event, $opts=array()) {
     $opts = $this->sanitizeOpts($opts); // sanitize the options
 
+    $event_link = apply_filters('uw_events_event_link', '#', $event);
+
     $out = '<li class="uw_event">';
-    $out .= '<span class="uw_event_title">' . $event->title . '</span>';
+    $out .= '<span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
     if ( ! empty($event->subtitle) )
       $out .= ' <span class="uw_event_subtitle">' . $event->subtitle . '</span>';
     if ( $opts['show_description'] ) {
@@ -100,6 +104,10 @@ class UwEvents {
     }
     $out .= '</li>';
     return $out;
+  }
+
+  public function eventLink($link, $event) {
+    return 'http://today.wisc.edu/events/view/' . $event->id;
   }
 
   /**
@@ -171,6 +179,7 @@ class UwEvents {
       $day_stamp = strftime('%d_%m_%Y', $start_unix);
 
       $e = (object) array(
+        'id' => $event->id,
         'title' => $event->title,
         'subtitle' => $event->subtitle,
         'type' => $event->eventtype_id,
@@ -283,6 +292,7 @@ class UwEvents {
       'limit' => 5,
       'title' => 'Events',
       'show_description' => FALSE,
+      'source' => 'function'
     );
 
     // Merge in the defaults

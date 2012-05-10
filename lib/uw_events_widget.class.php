@@ -42,6 +42,7 @@ class UwEventsWidget extends WP_Widget {
    * Render the widget content
    */
   public function widget( $args, $instance ) {
+    $instance['source'] = 'widget';
     $out = '<aside class="widget widget_meta">';
     if ( $parsed = $this->uwe->parse($instance['url'], $instance) ) {
       $out .= $parsed;
