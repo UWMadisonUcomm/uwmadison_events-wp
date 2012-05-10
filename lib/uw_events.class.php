@@ -6,7 +6,7 @@ class UwEvents {
 
   // Define the date formats to use
   public $date_formats = array(
-    'default' => '%c',
+    'default' => '<span class="uw_event_date">%c</span>',
     'db' => '%D'
   );
 
@@ -212,7 +212,8 @@ class UwEvents {
    */
   private function parseDateFormats($unix_time) {
     $out = array();
-    foreach ($this->date_formats as $name => $format) {
+    $date_formats = apply_filters('uw_events_date_formats', $this->date_formats);
+    foreach ($date_formats as $name => $format) {
       $out[$name] = strftime($format, $unix_time);
     }
     return $out;
