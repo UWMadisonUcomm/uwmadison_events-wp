@@ -26,7 +26,7 @@ class UwEvents {
 
     // Set the default date formats
     $this->date_formats = array(
-      'default' => '<span class="uw_event_date">%c</span>',
+      'default' => '<span class="uw_event_date">%D</span>',
       'db' => '%D'
     );
 
@@ -110,6 +110,7 @@ class UwEvents {
       if ( ! empty($event->description) )
         $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
     }
+    $out .= ' ' . $event->formatted_dates['default'];
     $out .= '</li>';
     return $out;
   }
@@ -135,21 +136,29 @@ class UwEvents {
       // Define the cache key
       $cache_key = $this->transientKey($built_url);
 
-      // If we already have data for the cache key, return it now
-      if ( ($cached = get_transient($cache_key)) !== FALSE )
-        return $cached;
+      // Pull remote data from the cache or fetch it
+      if ( ($remote_cache = get_transient($cache_key)) !== FALSE ) {
+        $remote_data = $remote_cache;
+      }
+      else {
+        $get = wp_remote_get($built_url);
+        if ( isset($get['body']) && !empty($get['body']) ) {
+          $remote_data = json_decode($get['body']);
+          set_transient($cache_key, $remote_data, $this->cache_expiration);
+        }
+        else {
+          $remote_data = FALSE;
+        }
+      }
 
-      // Retrieve the remote data if we don't have a cached copy
-      $get = wp_remote_get($built_url);
-      if ( isset($get['body']) && !empty($get['body']) ) {
-        $data = $this->processRemoteData($get['body']);
+      if ( $remote_data !== FALSE ) {
+        $data = $this->processRemoteData($remote_data);
         $out = (object) array(
           'method' => $parsed_url['method'],
           'id' => $parsed_url['id'],
           'timestamp' => time(),
           'data' => $data,
         );
-        set_transient($cache_key, $out, $this->cache_expiration);
         return $out;
       }
       else {
@@ -180,8 +189,7 @@ class UwEvents {
     $wp_timezone = date_default_timezone_get();
     date_default_timezone_set('America/Chicago');
 
-    $raw = json_decode($data);
-    foreach ($raw as $event) {
+    foreach ($data as $event) {
       $start_unix = strtotime($event->startDate);
       $end_unix = strtotime($event->endDate);
       $day_stamp = strftime('%d_%m_%Y', $start_unix);
