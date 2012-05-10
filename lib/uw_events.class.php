@@ -138,7 +138,7 @@ class UwEvents {
     date_default_timezone_set('America/Chicago');
 
     $raw = json_decode($data);
-    foreach ($raw->events as $event) {
+    foreach ($raw as $event) {
       $start_unix = strtotime($event->startDate);
       $end_unix = strtotime($event->endDate);
       $day_stamp = strftime('%d_%m_%Y', $start_unix);
