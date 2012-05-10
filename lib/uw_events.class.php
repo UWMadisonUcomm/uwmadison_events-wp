@@ -26,8 +26,9 @@ class UwEvents {
 
     // Set the default date formats
     $this->date_formats = array(
+      // Used to render the date in each <li> or individual events
       'default' => '<span class="uw_event_date">%D</span>',
-      'db' => '%D',
+      // Used to render the heading for each date group
       'group' => '%b %e',
     );
 
@@ -82,12 +83,31 @@ class UwEvents {
       // Let our users hook into the title classes
       $title_classes = apply_filters('uw_events_title_classes', $title_classes, $opts);
 
+      // Title and opening UL
       $out = '<h2 class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</h2>\n";
       $out .= '<ul class="uw_events">';
-      foreach ( $data->data['ungrouped'] as $event ) {
-        $out .= $this->eventHtml($event, $opts);
+
+      // Grouped or not grouped
+      if ( !$opts['grouped'] ) {
+        foreach ( $data->data['ungrouped'] as $event ) {
+          $out .= $this->eventHtml($event, $opts);
+        }
       }
-      $out .= '</ul>';
+      else { // Render a grouped list
+        foreach ( $data->data['grouped'] as $date => $data ) {
+          // Pull the 'group' formatted date from the first event in the list
+          // May be a slightly strange way to handle this, but it should work well
+          $group_date = $data[0]->formatted_dates['group'];
+
+          $out .= "<li>$group_date\n<ul class=\"uw_events\">";
+          foreach ( $data as $event ) {
+            $out .= $this->eventHtml($event, $opts);
+          }
+          $out .= "</ul></li>";
+        }
+      }
+
+      $out .= "</ul>"; // Closing UL
       return $out;
     }
     else {
