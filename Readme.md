@@ -19,3 +19,9 @@ This plugin currently supplies a widget, and theme function. It should eventuall
     <pre>
     <?php print_r(uw_events_get_remote('http://today.wisc.edu/events/tag/arts', array('limit' => 20))) ?>
     </pre>
+
+#### uw_events_get_event_data($id) ####
+
+    <pre>
+    <?php print_r(uw_events_get_event_data('123')) ?>
+    </pre>

@@ -63,3 +63,15 @@ function uw_events($url, $opts=array()) {
 function uw_events_get_remote($url, $opts=array()) {
   return uw_events_object()->getRemote($url, $opts);
 }
+
+/**
+ * Helper function to get data for a single event from an id
+ *
+ * @param $id {string}
+ *  The event id
+ * @return {object}
+ *  Return the event data or FALSE
+ */
+function uw_events_get_event_data($id) {
+  return uw_events_object()->getEvent($id);
+}

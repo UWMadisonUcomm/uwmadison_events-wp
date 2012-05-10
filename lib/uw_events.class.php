@@ -290,6 +290,33 @@ class UwEvents {
   }
 
   /**
+   * Helper function to get data for a single event from an id
+   * TODO: This needs more response validation for error codes
+   *
+   * @param $id {string}
+   *  The event id
+   * @return {object}
+   *  Return the event data or FALSE
+   */
+  public function getEvent($id) {
+    $data = FALSE; // Default data to false
+
+    if ( preg_match('/^\d+$/', $id) ) {
+      $id = "$id"; // Stringify
+      $cache_key = 'uwe_event_' . $id;
+      if ( ( $data = get_transient($cache_key) ) === FALSE ) {
+        $get = wp_remote_get($this->api_base . '/events/view/' . $id . '.json');
+        if ( isset($get['body']) && !empty($get['body'])) {
+          $data = json_decode($get['body']);
+          set_transient($cache_key, $data, $this->cache_expiration);
+        }
+      }
+    }
+
+    return $data;
+  }
+
+  /**
    * Build a unique cache key for the transient API based on a URL (with query arguments)
    * NOTE: The key has to be less than 40 characters
    * MD5 hex hashes are 32 characters
