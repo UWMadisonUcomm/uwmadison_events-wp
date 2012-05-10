@@ -78,6 +78,3 @@ class UwEventsWidget extends WP_Widget {
     return $out;
   }
 }
-
-// Register the widget with an ugly php "anonymous" function
-add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );

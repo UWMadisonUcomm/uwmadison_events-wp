@@ -16,10 +16,11 @@ class UwEvents {
   }
 
   /**
-   * Init our wordpress stuff
+   * Init our Wordpress stuff
    */
   public function init() {
-    // Wordpress init code
+    // Register the widget with an ugly php "anonymous" function
+    add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
   }
 
   /**
