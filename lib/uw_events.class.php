@@ -19,8 +19,23 @@ class UwEvents {
    * Init our Wordpress stuff
    */
   public function init() {
-    // Register the widget with an ugly php "anonymous" function
+    // Register the widget class
     add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
+    // A short code wrapper for ::parse()
+    add_shortcode( 'uw_events', array( &$this, 'shortCode') );
+  }
+
+  /**
+   * Wordpress shortcode responder.
+   * Another wrapper for ::parse()
+   *
+   * @param $atts {array}
+   * @return {string}
+   *  Returns the shortcode text
+   */
+  public function shortCode($atts) {
+    $url = $atts['url'];
+    return $this->parse($url, $atts);
   }
 
   /**
