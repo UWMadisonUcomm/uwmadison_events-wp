@@ -80,7 +80,7 @@ class UwEvents {
     if ( $parsed_url = $this->parseUrl($url) ) {
       $get = wp_remote_get($this->buildUrl($parsed_url, $opts));
       if ( isset($get['body']) && !empty($get['body']) ) {
-        $data = json_decode($get['body']);
+        $data = $this->processRemoteData($get['body']);
         return (object) array(
           'method' => $parsed_url['method'],
           'id' => $parsed_url['id'],
@@ -97,6 +97,31 @@ class UwEvents {
   }
 
   /**
+   * Process the remote JSON encoded string into a date sorted object
+   * Deal with the Wordpress timezone insanity here.
+   * All date formatting should be done in here so
+   * we only have to worry about timezone switching once.
+   *
+   * @param $data {string}
+   * @return {object}
+   *  Return a formatted data object for events
+   *
+   */
+  public function processRemoteData($data) {
+    // Switch to sanity from Wordpress
+    $wp_timezone = date_default_timezone_get();
+    date_default_timezone_set('America/Chicago');
+
+    $out = json_decode($data);
+
+    // Restore ourselves to Wordpress insanity
+    date_default_timezone_set($wp_timezone);
+
+    // Return
+    return $out;
+  }
+
+  /**
    * Parse an events calendar url
    * @param $url {string}
    * @return {array}
@@ -107,7 +132,7 @@ class UwEvents {
     $parse = parse_url($url);
     $url = $parse['path'];
 
-    $pattern = '~/events/([^/]+)/(.*)$~i';
+    $pattern = '~events/([^/]+)/(.*)$~i';
     if ( preg_match($pattern, $url, $matches) ) {
       return array(
         'method' => $matches[1],
