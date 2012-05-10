@@ -39,21 +39,17 @@ uw_events_object(); // Run the factory function
 require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
 
 /**
- * Helper functions for the wordpress theme
- */
-
-/**
- * Return the html for an events calendar url
+ * Theme helper function for displaying events
+ *
+ * Prints the events for a URL
+ * Calls UwEvents::parse()
  *
  * @param $url {string}
  * @param $opts {array}
  *
- * @return {string}
- *  Returns the html for the events url
- *
  */
 function uw_events($url, $opts=array()) {
-  return uw_events_object()->parse($url, $opts);
+  echo uw_events_object()->parse($url, $opts);
 }
 
 /**

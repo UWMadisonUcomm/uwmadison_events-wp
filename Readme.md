@@ -4,5 +4,4 @@ This plugin currently supplies a widget, and theme function. It should eventuall
 
 ### Theme function ###
 
-    <?php echo uw_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
-
+    <?php uw_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
