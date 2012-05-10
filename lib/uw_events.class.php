@@ -2,7 +2,7 @@
 
 class UwEvents {
   // The events calendar base API url
-  public $api_base = 'http://test.today.wisc.edu';
+  public $api_base = 'http://today.wisc.edu';
 
   // Define the date formats to use
   public $date_formats = array(
