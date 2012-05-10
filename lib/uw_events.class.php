@@ -4,6 +4,12 @@ class UwEvents {
   // The events calendar base API url
   public $api_base = 'http://test.today.wisc.edu';
 
+  // Define the date formats to use
+  public $date_formats = array(
+    'default' => '%c',
+    'db' => '%D'
+  );
+
   // Constructor
   public function __construct() {
     // Constructor code
@@ -32,7 +38,7 @@ class UwEvents {
     if ( $data = $this->getRemote($url, $opts) ) {
       $out = '<h2 class="uw_events_title">' . $opts['title'] . "</h2>\n";
       $out .= '<ul class="uw_events">';
-      foreach ( $data->data->events as $event ) {
+      foreach ( $data->data['ungrouped'] as $event ) {
         $out .= $this->eventHtml($event, $opts);
       }
       $out .= '</ul>';
@@ -108,11 +114,33 @@ class UwEvents {
    *
    */
   public function processRemoteData($data) {
+    // Init
+    $out = array( 'grouped' => array(), 'ungrouped' => array() );
+
     // Switch to sanity from Wordpress
     $wp_timezone = date_default_timezone_get();
     date_default_timezone_set('America/Chicago');
 
-    $out = json_decode($data);
+    $raw = json_decode($data);
+    foreach ($raw->events as $event) {
+      $start_unix = strtotime($event->startDate);
+      $end_unix = strtotime($event->endDate);
+      $day_stamp = strftime('%d_%m_%Y', $start_unix);
+
+      $e = (object) array(
+        'title' => $event->title,
+        'subtitle' => $event->subtitle,
+        'type' => $event->eventtype_id,
+        'description' => $event->description,
+        'formatted_dates' => $this->parseDateFormats($start_unix),
+        'start_timestamp' => $start_unix,
+        'end_timestamp' => $end_unix,
+      );
+
+      // Append to grouped and ungrouped output
+      $out['ungrouped'][] = $e;
+      $out['grouped'][$day_stamp][] = $e;
+    }
 
     // Restore ourselves to Wordpress insanity
     date_default_timezone_set($wp_timezone);
@@ -155,6 +183,23 @@ class UwEvents {
 
     $query = !isset($opts['limit']) ? '' : '?limit=' . (int) $opts['limit'];
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
+  }
+
+  /**
+   * Parse a unix timestamp into all of our defined date formats.
+   * Date formats are in the instance variable $this->date_formats
+   *
+   * @param $unix_time {integer}
+   *  Unix timestamp
+   * @return {array}
+   *  Return an array for names with formatted times
+   */
+  private function parseDateFormats($unix_time) {
+    $out = array();
+    foreach ($this->date_formats as $name => $format) {
+      $out[$name] = strftime($format, $unix_time);
+    }
+    return $out;
   }
 
   /**
