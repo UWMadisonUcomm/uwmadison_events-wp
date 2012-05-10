@@ -131,14 +131,15 @@ class UwEvents {
     $event_link = apply_filters('uw_events_event_link', $this->eventLink($event), $event);
 
     $out = '<li class="uw_event">';
-    $out .= '<span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
+    $out .= $event->formatted_dates['default'];
+    $out .= ' <span class="event-title-and-subtitle"><span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
     if ( ! empty($event->subtitle) )
       $out .= ' <span class="uw_event_subtitle">' . $event->subtitle . '</span>';
+    $out .= '</span>';
     if ( $opts['show_description'] ) {
       if ( ! empty($event->description) )
         $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
     }
-    $out .= ' ' . $event->formatted_dates['default'];
     $out .= '</li>';
     return $out;
   }
