@@ -74,7 +74,14 @@ class UwEvents {
   public function parse($url, $opts=array()) {
     $opts = $this->sanitizeOpts($opts);
     if ( $data = $this->getRemote($url, $opts) ) {
-      $out = '<h2 class="uw_events_title">' . $opts['title'] . "</h2>\n";
+      $title_classes = array('uw_events_title');
+      // Add the widget-title class if we're widget instantiated
+      if ( $opts['source'] == 'widget' )
+        $title_classes[] = 'widget-title';
+      // Let our users hook into the title classes
+      $title_classes = apply_filters('uw_events_title_classes', $title_classes, $opts);
+
+      $out = '<h2 class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</h2>\n";
       $out .= '<ul class="uw_events">';
       foreach ( $data->data['ungrouped'] as $event ) {
         $out .= $this->eventHtml($event, $opts);
