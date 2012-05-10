@@ -141,6 +141,10 @@ class UwEvents {
         $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
     }
     $out .= '</li>';
+
+    // Let the user apply filters to the <li> for each event
+    $out = apply_filters('uw_events_event_html', $out, $event, $opts);
+
     return $out;
   }
 
