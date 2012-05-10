@@ -10,7 +10,7 @@ Author: University Communications at the University of Wisconsin-Madison
 Version: 0.0.1
 */
 
-// Load the main library
+// Load the libraries
 require_once(dirname(__FILE__) . '/lib/uw_events.class.php');
 require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
 

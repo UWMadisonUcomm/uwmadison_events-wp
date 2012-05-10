@@ -261,8 +261,18 @@ class UwEvents {
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
   }
 
-  // Quickly build a unique transient key
+  /**
+   * Build a unique cache key for the transient API based on a URL (with query arguments)
+   * NOTE: The key has to be less than 40 characters
+   * MD5 hex hashes are 32 characters
+   *
+   * @param $url {string}
+   * @return {string}
+   *  The unique cache key
+   */
   private function transientKey($url) {
+    // Needs to be less than 40 characters
+    // md5() hex hashes are 32 characters
     return "uwe_r" . md5($url);
   }
 
