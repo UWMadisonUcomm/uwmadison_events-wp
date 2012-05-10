@@ -20,6 +20,8 @@ class UwEventsWidget extends WP_Widget {
   public function form( $instance ) {
     $url = isset($instance['url']) ? $instance['url'] : '';
     $limit = isset($instance['limit']) ? $instance['limit'] : '5';
+    $title = isset($instance['title']) ? $instance['title'] : 'Events';
+    echo $this->generateInput('title', 'Title:', $title);
     echo $this->generateInput('url', 'Url:', $url);
     echo $this->generateInput('limit', 'Limit:', $limit);
     return true;
