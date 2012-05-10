@@ -10,6 +10,9 @@ class UwEvents {
   // Cache expiration in seconds
   public $cache_expiration;
 
+  // Define the plugin name for paths
+  public $plugin_name;
+
   /**
    * Constructor function
    * Set the default instance variables
@@ -17,6 +20,9 @@ class UwEvents {
   public function __construct() {
     // API Base
     $this->api_base = 'http://today.wisc.edu';
+
+    // Plugin name
+    $this->plugin_name = 'uw_events';
 
     // Set the default date formats
     $this->date_formats = array(
@@ -37,6 +43,8 @@ class UwEvents {
     // A short code wrapper for ::parse()
     add_shortcode( 'uw_events', array( &$this, 'shortCode') );
     add_filter('uw_events_event_link', array(&$this, 'eventLink'), 10, 2);
+    // Enqueue our stylesheet
+    wp_enqueue_style( 'uw_events', plugins_url($this->plugin_name . '/stylesheets/uw_events.css') );
   }
 
   /**
@@ -292,7 +300,8 @@ class UwEvents {
       'limit' => 5,
       'title' => 'Events',
       'show_description' => FALSE,
-      'source' => 'function'
+      'source' => 'function',
+      'grouped' => FALSE,
     );
 
     // Merge in the defaults
