@@ -27,7 +27,8 @@ class UwEvents {
     // Set the default date formats
     $this->date_formats = array(
       'default' => '<span class="uw_event_date">%D</span>',
-      'db' => '%D'
+      'db' => '%D',
+      'group' => '%b %e',
     );
 
     // Default the cache to 15 minutes
