@@ -1,18 +1,18 @@
 <?php
 /**
-* @package UwEvents
+* @package UwmadisonEvents
 * @version 0.0.1
 */
 /*
-Plugin Name: UwEvents
+Plugin Name: UW-Madison Events
 Description: A wordpress plugin to interface with the UW-Madison events calendar
 Author: University Communications and Marketting at the University of Wisconsin-Madison
 Version: 0.0.1
 */
 
 // Load the libraries
-require_once(dirname(__FILE__) . '/lib/uw_events.class.php');
-require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
+require_once(dirname(__FILE__) . '/lib/uwmadison_events.class.php');
+require_once(dirname(__FILE__) . '/lib/uwmadison_events_widget.class.php');
 
 /**
  * Factory function for the UwEvents class
@@ -21,20 +21,20 @@ require_once(dirname(__FILE__) . '/lib/uw_events_widget.class.php');
  *  Returns an instantiated UwEvents object, runs ->init() the first time
  *
  */
-function &uw_events_object() {
-  static $uw_events_saved;
+function &uwmadison_events_object() {
+  static $uwmadison_events_saved;
 
-  if ( $uw_events_saved )
-    return $uw_events_saved;
+  if ( $uwmadison_events_saved )
+    return $uwmadison_events_saved;
 
   // Instantiate the main library and init Wordpress
-  $uw_events = new UwEvents();
-  $uw_events->init();
-  $uw_events_saved = $uw_events;
+  $uwmadison_events = new UwmadisonEvents();
+  $uwmadison_events->init();
+  $uwmadison_events_saved = $uwmadison_events;
 
-  return $uw_events_saved;
+  return $uwmadison_events_saved;
 }
-uw_events_object(); // Run the factory function
+uwmadison_events_object(); // Run the factory function
 
 /**
  * Theme helper function for displaying events
@@ -46,8 +46,8 @@ uw_events_object(); // Run the factory function
  * @param $opts {array}
  *
  */
-function uw_events($url, $opts=array()) {
-  echo uw_events_object()->parse($url, $opts);
+function uwmadison_events($url, $opts=array()) {
+  echo uwmadison_events_object()->parse($url, $opts);
 }
 
 /**
@@ -60,8 +60,8 @@ function uw_events($url, $opts=array()) {
  *  Returns an object for the data returned or false
  *
  */
-function uw_events_get_remote($url, $opts=array()) {
-  return uw_events_object()->getRemote($url, $opts);
+function uwmadison_events_get_remote($url, $opts=array()) {
+  return uwmadison_events_object()->getRemote($url, $opts);
 }
 
 /**
@@ -72,6 +72,6 @@ function uw_events_get_remote($url, $opts=array()) {
  * @return {object}
  *  Return the event data or FALSE
  */
-function uw_events_get_event_data($id) {
-  return uw_events_object()->getEvent($id);
+function uwmadison_events_get_event_data($id) {
+  return uwmadison_events_object()->getEvent($id);
 }

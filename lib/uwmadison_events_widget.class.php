@@ -2,16 +2,16 @@
 /**
  * Class for our widget
  */
-class UwEventsWidget extends WP_Widget {
+class UwmadisonEventsWidget extends WP_Widget {
   public function __construct() {
     parent::__construct(
-        'uw_events_widget', // Base ID
-        'UW Events', // Name
+        'uwmadison_events_widget', // Base ID
+        'UW-Madison Events', // Name
         array( 'description' => 'UW-Madison events calendar widget', ) // args
       );
 
     // Shortcut to acess the instantiated UwEvents object
-    $this->uwe = uw_events_object();
+    $this->uwe = uwmadison_events_object();
   }
 
   /**

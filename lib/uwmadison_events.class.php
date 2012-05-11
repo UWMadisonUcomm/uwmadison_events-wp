@@ -1,6 +1,6 @@
 <?php
 
-class UwEvents {
+class UwmadisonEvents {
   // The events calendar base API url
   public $api_base;
 
@@ -22,14 +22,14 @@ class UwEvents {
     $this->api_base = 'http://today.wisc.edu';
 
     // Plugin name
-    $this->plugin_name = 'uw_events';
+    $this->plugin_name = 'uwmadison_events';
 
     // Set the default date formats
     $this->date_formats = array(
       // Used to render the date in each <li> for individual events
-      'default' => '<span class="uw_event_date">%D</span>',
+      'default' => '<span class="uwmadison_event_date">%D</span>',
       // Used to render the heading for each date group
-      'group' => '<span class="uw_event_group_date">%b %e</span>',
+      'group' => '<span class="uwmadison_event_group_date">%b %e</span>',
     );
 
     // Default the cache to 30 minutes
@@ -41,12 +41,12 @@ class UwEvents {
    */
   public function init() {
     // Register the widget class
-    add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
+    add_action( 'widgets_init', create_function( '', 'register_widget( "UwmadisonEventsWidget" );' ) );
     // A short code wrapper for ::parse()
-    add_shortcode( 'uw_events', array( &$this, 'shortCode') );
+    add_shortcode( 'uwmadison_events', array( &$this, 'shortCode') );
     // Register and enque our stylesheet
-    wp_register_style( 'uw_events', plugins_url($this->plugin_name . '/stylesheets/uw_events.css') );
-    wp_enqueue_style( 'uw_events' );
+    wp_register_style( 'uwmadison_events', plugins_url($this->plugin_name . '/stylesheets/uwmadison_events.css') );
+    wp_enqueue_style( 'uwmadison_events' );
   }
 
   /**
@@ -77,16 +77,16 @@ class UwEvents {
   public function parse($url, $opts=array()) {
     $opts = $this->sanitizeOpts($opts);
     if ( $data = $this->getRemote($url, $opts) ) {
-      $title_classes = array('uw_events_title');
+      $title_classes = array('uwmadison_events_title');
       // Add the widget-title class if we're widget instantiated
       if ( $opts['source'] == 'widget' )
         $title_classes[] = 'widget-title';
       // Let our users hook into the title classes
-      $title_classes = apply_filters('uw_events_title_classes', $title_classes, $opts);
+      $title_classes = apply_filters('uwmadison_events_title_classes', $title_classes, $opts);
 
       // Title and opening UL
-      $out = '<div class="uw_events_container"><' . $opts['header_tag'] . ' class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</{$opts['header_tag']}>\n";
-      $out .= '<ul class="uw_events">';
+      $out = '<div class="uwmadison_events_container"><' . $opts['header_tag'] . ' class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</{$opts['header_tag']}>\n";
+      $out .= '<ul class="uwmadison_events">';
 
       // Grouped or not grouped
       if ( !$opts['grouped'] ) {
@@ -100,7 +100,7 @@ class UwEvents {
           // May be a slightly strange way to handle this, but it should work well
           $group_date = $grouped_data[0]->formatted_dates['group'];
 
-          $out .= "<li>$group_date\n<ul class=\"uw_events_group\">";
+          $out .= "<li>$group_date\n<ul class=\"uwmadison_events_group\">";
           foreach ( $grouped_data as $event ) {
             $out .= $this->eventHtml($event, $opts);
           }
@@ -111,7 +111,7 @@ class UwEvents {
       $out .= "</ul></div>"; // Closing UL
 
       // Filter for the entire output
-      $out = apply_filters('uw_events_html', $out, $data, $opts);
+      $out = apply_filters('uwmadison_events_html', $out, $data, $opts);
 
       return $out;
     }
@@ -136,20 +136,20 @@ class UwEvents {
     $event_link = $this->eventLink($event);
 
     $out = $event->formatted_dates['default'];
-    $out .= ' <span class="event-title-and-subtitle"><span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
+    $out .= ' <span class="event-title-and-subtitle"><span class="uwmadison_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
     if ( ! empty($event->subtitle) )
-      $out .= ' <span class="uw_event_subtitle">' . $event->subtitle . '</span>';
+      $out .= ' <span class="uwmadison_event_subtitle">' . $event->subtitle . '</span>';
     $out .= '</span>';
     if ( $opts['show_description'] ) {
       if ( ! empty($event->description) )
-        $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
+        $out .= ' <span class="uwmadison_event_description">' . $event->description . '</span>';
     }
 
     // Let the user apply filters to the <li> for each event
-    $out = apply_filters('uw_events_event_html', $out, $event, $opts);
+    $out = apply_filters('uwmadison_events_event_html', $out, $event, $opts);
 
     // Return the output wrapped in an <li>
-    return '<li class="uw_event">' . $out . '</li>';
+    return '<li class="uwmadison_event">' . $out . '</li>';
   }
 
   /**
@@ -162,7 +162,7 @@ class UwEvents {
    */
   public function eventLink($event) {
     $link = $this->api_base . '/events/view/' . $event->id;
-    return apply_filters('uw_events_event_link', $link, $event);
+    return apply_filters('uwmadison_events_event_link', $link, $event);
   }
 
   /**
@@ -352,7 +352,7 @@ class UwEvents {
    */
   private function parseDateFormats($unix_time) {
     $out = array();
-    $date_formats = apply_filters('uw_events_date_formats', $this->date_formats);
+    $date_formats = apply_filters('uwmadison_events_date_formats', $this->date_formats);
     foreach ($date_formats as $name => $format) {
       $out[$name] = strftime($format, $unix_time);
     }
