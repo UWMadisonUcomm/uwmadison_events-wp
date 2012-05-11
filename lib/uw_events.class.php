@@ -85,7 +85,7 @@ class UwEvents {
       $title_classes = apply_filters('uw_events_title_classes', $title_classes, $opts);
 
       // Title and opening UL
-      $out = '<h2 class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</h2>\n";
+      $out = '<div class="uw_events_container"><h2 class="' . implode(' ', $title_classes) . '">' . $opts['title'] . "</h2>\n";
       $out .= '<ul class="uw_events">';
 
       // Grouped or not grouped
@@ -108,7 +108,7 @@ class UwEvents {
         }
       }
 
-      $out .= "</ul>"; // Closing UL
+      $out .= "</ul></div>"; // Closing UL
 
       // Filter for the entire output
       $out = apply_filters('uw_events_html', $out, $data, $opts);
