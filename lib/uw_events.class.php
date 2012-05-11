@@ -44,8 +44,9 @@ class UwEvents {
     add_action( 'widgets_init', create_function( '', 'register_widget( "UwEventsWidget" );' ) );
     // A short code wrapper for ::parse()
     add_shortcode( 'uw_events', array( &$this, 'shortCode') );
-    // Enqueue our stylesheet
+    // Register and enque our stylesheet
     wp_register_style( 'uw_events', plugins_url($this->plugin_name . '/stylesheets/uw_events.css') );
+    wp_enqueue_style( 'uw_events' );
   }
 
   /**
