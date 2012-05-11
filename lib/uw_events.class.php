@@ -32,8 +32,8 @@ class UwEvents {
       'group' => '%b %e',
     );
 
-    // Default the cache to 15 minutes
-    $this->cache_expiration = 60 * 15;
+    // Default the cache to 30 minutes
+    $this->cache_expiration = 60 * 30;
   }
 
   /**
