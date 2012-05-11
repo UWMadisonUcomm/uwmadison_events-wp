@@ -94,13 +94,13 @@ class UwEvents {
         }
       }
       else { // Render a grouped list
-        foreach ( $data->data['grouped'] as $date => $data ) {
+        foreach ( $data->data['grouped'] as $date => $grouped_data ) {
           // Pull the 'group' formatted date from the first event in the list
           // May be a slightly strange way to handle this, but it should work well
-          $group_date = $data[0]->formatted_dates['group'];
+          $group_date = $grouped_data[0]->formatted_dates['group'];
 
           $out .= "<li>$group_date\n<ul class=\"uw_events\">";
-          foreach ( $data as $event ) {
+          foreach ( $grouped_data as $event ) {
             $out .= $this->eventHtml($event, $opts);
           }
           $out .= "</ul></li>";
@@ -108,6 +108,10 @@ class UwEvents {
       }
 
       $out .= "</ul>"; // Closing UL
+
+      // Filter for the entire output
+      $out = apply_filters('uw_events_html', $out, $data, $opts);
+
       return $out;
     }
     else {
