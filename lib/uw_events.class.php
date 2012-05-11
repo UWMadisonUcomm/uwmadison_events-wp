@@ -132,7 +132,7 @@ class UwEvents {
     $opts = $this->sanitizeOpts($opts); // sanitize the options
 
     // Allow others to filter the event link, pass the event object as a second param
-    $event_link = apply_filters('uw_events_event_link', $this->eventLink($event), $event);
+    $event_link = $this->eventLink($event);
 
     $out = '<li class="uw_event">';
     $out .= $event->formatted_dates['default'];
@@ -161,7 +161,8 @@ class UwEvents {
    *  Return the link for a specific event
    */
   public function eventLink($event) {
-    return $this->api_base . '/events/view/' . $event->id;
+    $link = $this->api_base . '/events/view/' . $event->id;
+    return apply_filters('uw_events_event_link', $link, $event);
   }
 
   /**
