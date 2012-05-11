@@ -29,7 +29,7 @@ class UwEvents {
       // Used to render the date in each <li> for individual events
       'default' => '<span class="uw_event_date">%D</span>',
       // Used to render the heading for each date group
-      'group' => '%b %e',
+      'group' => '<span class="uw_event_group_date">%b %e</span>',
     );
 
     // Default the cache to 30 minutes
@@ -100,7 +100,7 @@ class UwEvents {
           // May be a slightly strange way to handle this, but it should work well
           $group_date = $grouped_data[0]->formatted_dates['group'];
 
-          $out .= "<li>$group_date\n<ul class=\"uw_events\">";
+          $out .= "<li>$group_date\n<ul class=\"uw_events_group\">";
           foreach ( $grouped_data as $event ) {
             $out .= $this->eventHtml($event, $opts);
           }
