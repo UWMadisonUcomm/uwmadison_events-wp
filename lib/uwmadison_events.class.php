@@ -133,7 +133,7 @@ class UwmadisonEvents {
     $opts = $this->sanitizeOpts($opts); // sanitize the options
 
     // Allow others to filter the event link, pass the event object as a second param
-    $event_link = $this->eventLink($event);
+    $event_link = $event->link;
 
     $out = $event->formatted_dates['default'];
     $out .= ' <span class="event-title-and-subtitle"><span class="uwmadison_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
@@ -249,6 +249,7 @@ class UwmadisonEvents {
         'formatted_dates' => $this->parseDateFormats($start_unix),
         'start_timestamp' => $start_unix,
         'end_timestamp' => $end_unix,
+        'link' => $this->eventLink($event),
       );
 
       // Append to grouped and ungrouped output
