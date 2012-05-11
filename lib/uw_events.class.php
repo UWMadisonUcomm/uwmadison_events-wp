@@ -187,7 +187,7 @@ class UwEvents {
       }
       else {
         $get = wp_remote_get($built_url);
-        if ( isset($get['body']) && !empty($get['body']) ) {
+        if ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
           $remote_data = json_decode($get['body']);
           set_transient($cache_key, $remote_data, $this->cache_expiration);
         }
@@ -315,7 +315,7 @@ class UwEvents {
       $cache_key = 'uwe_event_' . $id;
       if ( ( $data = get_transient($cache_key) ) === FALSE ) {
         $get = wp_remote_get($this->api_base . '/events/view/' . $id . '.json');
-        if ( isset($get['body']) && !empty($get['body'])) {
+        if ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
           $data = json_decode($get['body']);
           set_transient($cache_key, $data, $this->cache_expiration);
         }
