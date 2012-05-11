@@ -26,7 +26,7 @@ class UwEvents {
 
     // Set the default date formats
     $this->date_formats = array(
-      // Used to render the date in each <li> or individual events
+      // Used to render the date in each <li> for individual events
       'default' => '<span class="uw_event_date">%D</span>',
       // Used to render the heading for each date group
       'group' => '%b %e',
