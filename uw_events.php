@@ -6,7 +6,7 @@
 /*
 Plugin Name: UwEvents
 Description: A wordpress plugin to interface with the UW-Madison events calendar
-Author: University Communications at the University of Wisconsin-Madison
+Author: University Communications and Marketting at the University of Wisconsin-Madison
 Version: 0.0.1
 */
 
