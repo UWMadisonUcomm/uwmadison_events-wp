@@ -134,8 +134,7 @@ class UwEvents {
     // Allow others to filter the event link, pass the event object as a second param
     $event_link = $this->eventLink($event);
 
-    $out = '<li class="uw_event">';
-    $out .= $event->formatted_dates['default'];
+    $out = $event->formatted_dates['default'];
     $out .= ' <span class="event-title-and-subtitle"><span class="uw_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
     if ( ! empty($event->subtitle) )
       $out .= ' <span class="uw_event_subtitle">' . $event->subtitle . '</span>';
@@ -144,12 +143,12 @@ class UwEvents {
       if ( ! empty($event->description) )
         $out .= ' <span class="uw_event_description">' . $event->description . '</span>';
     }
-    $out .= '</li>';
 
     // Let the user apply filters to the <li> for each event
     $out = apply_filters('uw_events_event_html', $out, $event, $opts);
 
-    return $out;
+    // Return the output wrapped in an <li>
+    return '<li class="uw_event">' . $out . '</li>';
   }
 
   /**
