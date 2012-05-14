@@ -66,12 +66,9 @@ class UwmadisonEvents {
    * Public parse interface
    * Builds the <ul> for all events
    *
-   * @param $url {string}
-   * @param $opts {array}
-   *
-   * @return {string}
-   *  Returns an html <ul> for the events requested
-   *
+   * @param string $url
+   * @param array $opts
+   * @return {string} Returns an html <ul> for the events requested
    */
   public function parse($url, $opts=array()) {
     $opts = $this->sanitizeOpts($opts);
