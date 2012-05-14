@@ -53,9 +53,8 @@ class UwmadisonEvents {
    * Wordpress shortcode responder.
    * Another wrapper for ::parse()
    *
-   * @param $atts {array}
-   * @return {string}
-   *  Returns the shortcode text
+   * @param array $atts
+   * @return string Returns the shortcode text
    */
   public function shortCode($atts) {
     $url = $atts['url'];
