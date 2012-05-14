@@ -246,6 +246,7 @@ class UwmadisonEvents {
         'start_timestamp' => $start_unix,
         'end_timestamp' => $end_unix,
         'link' => $this->eventLink($event),
+        'narrative_listing' => $event->narrative_listing,
       );
 
       // Append to grouped and ungrouped output
