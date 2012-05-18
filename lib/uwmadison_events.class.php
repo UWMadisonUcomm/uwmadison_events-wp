@@ -29,7 +29,9 @@ class UwmadisonEvents {
       // Used to render the date in each <li> for individual events
       'default' => '<span class="uwmadison_event_date">%D</span>',
       // Used to render the heading for each date group
-      'group' => '<span class="uwmadison_event_group_date">%b %e</span>',
+      'group_header' => '<span class="uwmadison_event_group_date">%b %e</span>',
+      // Used to render the date/time next to individual events in the grouped view
+      'group_item' => '<span class="uwmadison_event_date">%l:%M %p</span>',
     );
 
     // Default the cache to 30 minutes
@@ -94,7 +96,7 @@ class UwmadisonEvents {
         foreach ( $data->data['grouped'] as $date => $grouped_data ) {
           // Pull the 'group' formatted date from the first event in the list
           // May be a slightly strange way to handle this, but it should work well
-          $group_date = $grouped_data[0]->formatted_dates['group'];
+          $group_date = $grouped_data[0]->formatted_dates['group_header'];
 
           $out .= "<li>$group_date\n<ul class=\"uwmadison_events_group\">";
           foreach ( $grouped_data as $event ) {
@@ -131,7 +133,9 @@ class UwmadisonEvents {
     // Allow others to filter the event link, pass the event object as a second param
     $event_link = $event->link;
 
-    $out = $event->formatted_dates['default'];
+    // Start with either the default or group_item date string
+    $out = $opts['grouped'] ? $event->formatted_dates['group_item'] : $event->formatted_dates['default'];
+
     $out .= ' <span class="event-title-and-subtitle"><span class="uwmadison_event_title">' . "<a href=\"$event_link\">" . $event->title . '</a></span>';
     if ( ! empty($event->subtitle) )
       $out .= ' <span class="uwmadison_event_subtitle">' . $event->subtitle . '</span>';
