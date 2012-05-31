@@ -46,9 +46,6 @@ class UwmadisonEvents {
     add_action( 'widgets_init', create_function( '', 'register_widget( "UwmadisonEventsWidget" );' ) );
     // A short code wrapper for ::parse()
     add_shortcode( 'uwmadison_events', array( &$this, 'shortCode') );
-    // Register and enque our stylesheet
-    wp_register_style( 'uwmadison_events', plugins_url($this->plugin_name . '/stylesheets/uwmadison_events.css') );
-    wp_enqueue_style( 'uwmadison_events' );
   }
 
   /**
