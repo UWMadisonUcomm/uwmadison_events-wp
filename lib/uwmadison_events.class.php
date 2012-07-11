@@ -195,7 +195,14 @@ class UwmadisonEvents {
       }
 
       if ( $remote_data !== FALSE ) {
-        $data = $this->processRemoteData($remote_data);
+        // If the server returned more events than our limit specified, truncate the array
+        // manually. Some of the API methods don't yet accept ?limit=
+        if ( is_array($remote_data) && count($remote_data) > $opts['limit'] ) {
+          array_splice( $remote_data, $opts['limit'] );
+        }
+
+        $data = $this->processRemoteData($remote_data, $opts);
+
         $out = (object) array(
           'method' => $parsed_url['method'],
           'id' => $parsed_url['id'],
@@ -224,7 +231,10 @@ class UwmadisonEvents {
    *  Return a formatted data object for events
    *
    */
-  public function processRemoteData($data) {
+  public function processRemoteData($data, $opts=array()) {
+    // Sanitize opts
+    $opts = $this->sanitizeOpts($opts); // Sanitize the options
+
     // Init
     $out = array( 'grouped' => array(), 'ungrouped' => array() );
 
