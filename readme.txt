@@ -12,3 +12,5 @@ A WordPress plugin to interface with the UW-Madison Events Calendar (http://toda
 This plugin currently supplies a widget, theme functions, and shortcode to
 display filtered entries from specific feeds and tags from the UW-Madison events
 calendar (http://today.wisc.edu.)
+
+https://github.com/UWMadisonUcomm/uwmadison_events-wp
