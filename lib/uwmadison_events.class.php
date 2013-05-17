@@ -259,6 +259,7 @@ class UwmadisonEvents {
         'formatted_dates' => $this->parseDateFormats($start_unix),
         'start_timestamp' => $start_unix,
         'end_timestamp' => $end_unix,
+        'all_day_event' => $event->allDayEvent,
         'link' => $this->eventLink($event),
         'narrative_listing' => $event->narrative_listing,
       );
