@@ -79,6 +79,6 @@ Example:
 
 ### Change log
 
-#### 1.1
+#### 1.1 (May 16, 2013)
 
 * Adds contact_phone, contact_email, cost and all_day_event to data output
