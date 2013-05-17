@@ -2,7 +2,7 @@
 Contributors: bshelton229, uwmadison_ucomm
 Tags: uwmadison
 Requires at least: 3.0
-Tested up to: 3.4.1
+Tested up to: 3.5.1
 Stable tag: trunk
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (http://today.wisc.edu)
