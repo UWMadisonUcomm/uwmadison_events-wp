@@ -76,3 +76,9 @@ Example:
 		// When registering this filter, we must tell it we're receiving 3 arguments
 		// if we want access to the $event object and options
 		add_filter('uwmadison_events_event_html', 'my_uwmadison_events_html', 10, 3);
+
+### Change log
+
+#### 1.1
+
+* Adds contact_phone, contact_email, cost and all_day_event to data output
