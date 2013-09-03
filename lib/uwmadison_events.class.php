@@ -251,7 +251,6 @@ class UwmadisonEvents {
         'id' => $event->id,
         'title' => $event->title,
         'subtitle' => $event->subtitle,
-        'type' => $event->eventtype_id,
         'description' => $event->description,
         'cost' => $event->cost,
         'contact_phone' => $event->phone,

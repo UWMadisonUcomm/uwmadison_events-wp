@@ -1,7 +1,7 @@
 <?php
 /**
 * @package UwmadisonEvents
-* @version 1.1
+* @version 1.1.1
 */
 /*
 Plugin Name: UW-Madison Events

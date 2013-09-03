@@ -79,6 +79,10 @@ Example:
 
 ### Change log
 
+#### 1.1.2 (Sept. 3, 2013)
+
+* Removes type from output since it is not passed in today.wisc.edu JSON
+
 #### 1.1 (May 16, 2013)
 
 * Adds contact_phone, contact_email, cost and all_day_event to data output
