@@ -79,7 +79,11 @@ Example:
 
 ### Change log
 
-#### 1.1.2 (Sept. 3, 2013)
+#### 1.1.2 (Sept. 17, 2013)
+
+* Default date formats check for Windows to swap out windows compatible strftime strings.
+
+#### 1.1.1 (Sept. 3, 2013)
 
 * Removes type from output since it is not passed in today.wisc.edu JSON
 
