@@ -411,13 +411,34 @@ class UwmadisonEvents {
    *  Return a keyed array of strftime parsable strings
    */
   private function dateFormats() {
-    return array(
+    $formats = array(
       // Used to render the date in each <li> for individual events
-      'default' => '<span class="uwmadison_event_date">%D</span>',
+      'default' => '<span class="uwmadison_event_date">%m/%d/%y</span>',
       // Used to render the heading for each date group
       'group_header' => '<span class="uwmadison_event_group_date">%b %e</span>',
       // Used to render the date/time next to individual events in the grouped view
       'group_item' => '<span class="uwmadison_event_date">%l:%M %p</span>',
     );
+
+    /**
+     * Windows overrides. Windows doesn't have some strftime variables.
+     */
+    if ($this->isWindows()) {
+      // Difference here is the %d rather than %e (space padded)
+      $out['group_header'] = '<span class="uwmadison_event_group_date">%b %d</span>';
+      // Difference here is the %I rather than %l (space paddded)
+      $out['group_item'] = '<span class="uwmadison_event_date">%I:%M %p</span>';
+    }
+
+    return $formats;
+  }
+
+  /**
+   * Check for Windows
+   *
+   * @return {boolean} Are we Windows, or a working OS?
+   */
+  private function isWindows() {
+    return preg_match('/^win/i',PHP_OS);
   }
 }
