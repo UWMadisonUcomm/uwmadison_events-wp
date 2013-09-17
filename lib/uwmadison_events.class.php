@@ -425,9 +425,9 @@ class UwmadisonEvents {
      */
     if ($this->isWindows()) {
       // Difference here is the %d rather than %e (space padded)
-      $out['group_header'] = '<span class="uwmadison_event_group_date">%b %d</span>';
+      $formats['group_header'] = '<span class="uwmadison_event_group_date">%b %d</span>';
       // Difference here is the %I rather than %l (space paddded)
-      $out['group_item'] = '<span class="uwmadison_event_date">%I:%M %p</span>';
+      $formats['group_item'] = '<span class="uwmadison_event_date">%I:%M %p</span>';
     }
 
     return $formats;
