@@ -4,9 +4,6 @@ class UwmadisonEvents {
   // The events calendar base API url
   public $api_base;
 
-  // Define the date formats to use
-  public $date_formats;
-
   // Cache expiration in seconds
   public $cache_expiration;
 
@@ -23,16 +20,6 @@ class UwmadisonEvents {
 
     // Plugin name
     $this->plugin_name = 'uwmadison_events';
-
-    // Set the default date formats
-    $this->date_formats = array(
-      // Used to render the date in each <li> for individual events
-      'default' => '<span class="uwmadison_event_date">%D</span>',
-      // Used to render the heading for each date group
-      'group_header' => '<span class="uwmadison_event_group_date">%b %e</span>',
-      // Used to render the date/time next to individual events in the grouped view
-      'group_item' => '<span class="uwmadison_event_date">%l:%M %p</span>',
-    );
 
     // Default the cache to 30 minutes
     $this->cache_expiration = 60 * 30;
@@ -364,7 +351,7 @@ class UwmadisonEvents {
    */
   private function parseDateFormats($unix_time) {
     $out = array();
-    $date_formats = apply_filters('uwmadison_events_date_formats', $this->date_formats);
+    $date_formats = apply_filters('uwmadison_events_date_formats', $this->dateFormats());
     foreach ($date_formats as $name => $format) {
       $out[$name] = strftime($format, $unix_time);
     }
@@ -412,5 +399,25 @@ class UwmadisonEvents {
     $opts = array_merge($defaults, $opts);
 
     return $opts;
+  }
+
+  /**
+   * Return the default array of date format
+   * strings for strftime. It should check
+   * for Windows to make compatible strftime
+   * strings. This array is filterable in Wordpress.
+   *
+   * @return {array}
+   *  Return a keyed array of strftime parsable strings
+   */
+  private function dateFormats() {
+    return array(
+      // Used to render the date in each <li> for individual events
+      'default' => '<span class="uwmadison_event_date">%D</span>',
+      // Used to render the heading for each date group
+      'group_header' => '<span class="uwmadison_event_group_date">%b %e</span>',
+      // Used to render the date/time next to individual events in the grouped view
+      'group_item' => '<span class="uwmadison_event_date">%l:%M %p</span>',
+    );
   }
 }
