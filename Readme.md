@@ -79,6 +79,10 @@ Example:
 
 ### Change log
 
+#### 1.1.3 (Dec. 30, 2013)
+
+* Add location field to processd output data
+
 #### 1.1.2 (Sept. 17, 2013)
 
 * Default date formats check for Windows to swap out windows compatible strftime strings.

@@ -1,5 +1,5 @@
 === UW-Madison Events Calendar ===
-Contributors: bshelton229, uwmadison_ucomm
+Contributors: bshelton229, uwmadison_ucomm, jnweaver
 Tags: uwmadison
 Requires at least: 3.0
 Tested up to: 3.6.1
