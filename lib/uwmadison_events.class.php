@@ -248,6 +248,7 @@ class UwmadisonEvents {
         'all_day_event' => $event->allDayEvent,
         'link' => $this->eventLink($event),
         'narrative_listing' => $event->narrative_listing,
+        'location' => $event->location,
       );
 
       // Append to grouped and ungrouped output
