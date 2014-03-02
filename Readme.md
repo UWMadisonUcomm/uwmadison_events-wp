@@ -31,7 +31,7 @@ Look at 10 of the film events with a feed title of Film Events, showing descript
         <?php print_r(uwmadison_events_get_event_data('123')) ?>
     </pre>
 
-### Pagination with the lower level helper function
+### Pagination
 
 Note: The today.wisc.edu JSON feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero.
 
