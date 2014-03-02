@@ -25,11 +25,18 @@ Look at 10 of the film events with a feed title of Film Events, showing descript
         <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('limit' => 20))) ?>
     </pre>
 
+Pagination with the lower level helper function. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero.)
+
+    <pre>
+        <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
+    </pre>
+
 **uwmadison_events_get_event_data($event_id)**
 
     <pre>
         <?php print_r(uwmadison_events_get_event_data('123')) ?>
     </pre>
+
 
 ### Hooks and Filters
 
@@ -78,6 +85,10 @@ Example:
 		add_filter('uwmadison_events_event_html', 'my_uwmadison_events_html', 10, 3);
 
 ### Change log
+
+#### 1.1.4 (March 2, 2014)
+
+* Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('http://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero).
 
 #### 1.1.3 (Dec. 30, 2013)
 

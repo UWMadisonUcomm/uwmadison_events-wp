@@ -184,7 +184,8 @@ class UwmadisonEvents {
       if ( $remote_data !== FALSE ) {
         // If the server returned more events than our limit specified, truncate the array
         // manually. Some of the API methods don't yet accept ?limit=
-        if ( is_array($remote_data) && count($remote_data) > $opts['limit'] ) {
+        // if per_page was passed, don't splice the array
+        if ( is_array($remote_data) && count($remote_data) > $opts['limit'] && !isset($opts['per_page']) ) {
           array_splice( $remote_data, $opts['limit'] );
         }
 
@@ -288,6 +289,7 @@ class UwmadisonEvents {
 
   /**
    * Re-build a URL from a parseUrl() parsed url
+   * Build the query string based on the query options
    * @param $parsed_url {string}
    * @return {string}
    *  Return a full url string
@@ -295,7 +297,17 @@ class UwmadisonEvents {
   public function buildUrl($parsed_url, $opts=array()) {
     $opts = $this->sanitizeOpts($opts); // Sanitize the options
 
-    $query = !isset($opts['limit']) ? '' : '?limit=' . (int) $opts['limit'];
+    // if per_page is set, unset limit
+    if ($opts['per_page'])
+      unset($opts['limit']);
+
+    // build URL query from possible query options
+    $query_opts = array('limit','per_page','page');
+    $query = http_build_query(array_intersect_key($opts, array_flip($query_opts)));
+
+    if (!empty($query))
+      $query = "?" . $query;
+
     return $this->api_base . '/events/' . $parsed_url['method'] . '/' . $parsed_url['id'] . '.json' . $query;
   }
 
@@ -386,9 +398,27 @@ class UwmadisonEvents {
       $opts['limit'] = (int) $opts['limit'];
     }
 
+    // Validate per_page
+    if ( isset($opts['per_page']) && (int) $opts['per_page'] < 1 ) {
+      unset($opts['per_page']);
+    }
+    else {
+      $opts['per_page'] = (int) $opts['per_page'];
+    }
+
+    // Validate the page
+    if ( isset($opts['page']) && (int) $opts['page'] < 1 ) {
+      unset($opts['page']);
+    }
+    else {
+      $opts['page'] = (int) $opts['page'];
+    }
+
     // Defaults
     $defaults = array(
       'limit' => 5,
+      'per_page' => null,
+      'page' => null,
       'title' => 'Events',
       'show_description' => FALSE,
       'source' => 'function',
