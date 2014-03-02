@@ -13,4 +13,6 @@ This plugin currently supplies a widget, theme functions, and shortcode to
 display filtered entries from specific feeds and tags from the UW-Madison events
 calendar (http://today.wisc.edu.)
 
+UPDATE: Version 1.1.4 adds pagination support
+
 https://github.com/UWMadisonUcomm/uwmadison_events-wp
