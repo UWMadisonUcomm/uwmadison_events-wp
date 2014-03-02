@@ -25,17 +25,26 @@ Look at 10 of the film events with a feed title of Film Events, showing descript
         <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('limit' => 20))) ?>
     </pre>
 
-Pagination with the lower level helper function. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero.)
-
-    <pre>
-        <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
-    </pre>
-
 **uwmadison_events_get_event_data($event_id)**
 
     <pre>
         <?php print_r(uwmadison_events_get_event_data('123')) ?>
     </pre>
+
+### Pagination with the lower level helper function
+
+Note: The today.wisc.edu JSON feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero.
+
+Pagination with the theme function:
+
+    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3)) ?>
+    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
+
+Pagination with the lower level function:
+    <pre>
+        <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
+    </pre>
+
 
 
 ### Hooks and Filters
