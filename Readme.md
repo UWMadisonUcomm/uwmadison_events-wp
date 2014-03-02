@@ -35,12 +35,12 @@ Look at 10 of the film events with a feed title of Film Events, showing descript
 
 Note: The today.wisc.edu JSON feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero.
 
-Pagination with the theme function:
+**Pagination with the theme function:**
 
     <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3)) ?>
     <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
 
-Pagination with the lower level function:
+**Pagination with the lower level function:**
     <pre>
         <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
     </pre>
