@@ -1,6 +1,6 @@
 ## UW-Madison Events Calendar Wordpress Plugin
 
-This plugin currently supplies a widget, and theme function. It should eventually supply a shortcode as well.
+This plugin currently supplies a widget, and theme function.
 
 ### Theme Function
 
