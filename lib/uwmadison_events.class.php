@@ -250,6 +250,7 @@ class UwmadisonEvents {
         'link' => $this->eventLink($event),
         'narrative_listing' => $event->narrative_listing,
         'location' => $event->location,
+        'uw_map_url' => $event->uw_map_link,
       );
 
       // Append to grouped and ungrouped output

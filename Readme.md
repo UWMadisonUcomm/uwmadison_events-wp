@@ -95,6 +95,10 @@ Example:
 
 ### Change log
 
+#### 1.1.5 (June 27, 2014)
+
+* Add uw_map_url field to processd output data. If location references a campus building, a map.wisc.edu URL will be returned, e.g. http://www.map.wisc.edu/?initObj=0485
+
 #### 1.1.4 (March 2, 2014)
 
 * Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('http://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero).
