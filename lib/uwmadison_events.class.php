@@ -172,7 +172,10 @@ class UwmadisonEvents {
       }
       else {
         $get = wp_remote_get($built_url);
-        if ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
+		if( is_wp_error( $get ) ) {
+			return FALSE;
+		}
+		elseif ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
           $remote_data = json_decode($get['body']);
           set_transient($cache_key, $remote_data, $this->cache_expiration);
         }
