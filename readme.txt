@@ -2,7 +2,7 @@
 Contributors: bshelton229, jnweaver, sterlinganderson
 Tags: uwmadison
 Requires at least: 3.0
-Tested up to: 3.9.1
+Tested up to: 4.1
 Stable tag: 1.1.6
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (http://today.wisc.edu)
