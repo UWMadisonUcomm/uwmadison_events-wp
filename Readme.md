@@ -95,6 +95,10 @@ Example:
 
 ### Change log
 
+#### 1.1.6 (January 27, 2015)
+
+* Adds handling for wp_remote_get errors; returns FALSE (@sterlinganderson)
+
 #### 1.1.5 (June 27, 2014)
 
 * Add uw_map_url field to processd output data. If location references a campus building, a map.wisc.edu URL will be returned, e.g. http://www.map.wisc.edu/?initObj=0485

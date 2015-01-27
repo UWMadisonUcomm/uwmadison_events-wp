@@ -172,10 +172,10 @@ class UwmadisonEvents {
       }
       else {
         $get = wp_remote_get($built_url);
-		if( is_wp_error( $get ) ) {
-			return FALSE;
-		}
-		elseif ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
+        if( is_wp_error( $get ) ) {
+          return FALSE;
+        }
+        elseif ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
           $remote_data = json_decode($get['body']);
           set_transient($cache_key, $remote_data, $this->cache_expiration);
         }
@@ -199,7 +199,7 @@ class UwmadisonEvents {
           'id' => $parsed_url['id'],
           'timestamp' => time(),
           'data' => $data,
-        );
+          );
         return $out;
       }
       else {
@@ -254,7 +254,7 @@ class UwmadisonEvents {
         'narrative_listing' => $event->narrative_listing,
         'location' => $event->location,
         'uw_map_url' => $event->uw_map_link,
-      );
+        );
 
       // Append to grouped and ungrouped output
       $out['ungrouped'][] = $e;
@@ -284,7 +284,7 @@ class UwmadisonEvents {
       return array(
         'method' => $matches[1],
         'id' => $this->stripExtension($matches[2]),
-      );
+        );
     }
     else {
       return FALSE;
@@ -332,10 +332,10 @@ class UwmadisonEvents {
       $cache_key = 'uwe_event_' . $id;
       if ( ( $data = get_transient($cache_key) ) === FALSE ) {
         $get = wp_remote_get($this->api_base . '/events/view/' . $id . '.json');
-		if( is_wp_error( $get ) ) {
-			return FALSE;
-		}
-		elseif ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
+        if( is_wp_error( $get ) ) {
+          return FALSE;
+        }
+        elseif ( isset($get['response']['code']) && !preg_match('/^(4|5)/', $get['response']['code']) ) {
           $data = json_decode($get['body']);
           set_transient($cache_key, $data, $this->cache_expiration);
         }
@@ -431,7 +431,7 @@ class UwmadisonEvents {
       'source' => 'function',
       'grouped' => FALSE,
       'header_tag' => 'h2',
-    );
+      );
 
     // Merge in the defaults
     $opts = array_merge($defaults, $opts);
@@ -456,7 +456,7 @@ class UwmadisonEvents {
       'group_header' => '<span class="uwmadison_event_group_date">%b %e</span>',
       // Used to render the date/time next to individual events in the grouped view
       'group_item' => '<span class="uwmadison_event_date">%l:%M %p</span>',
-    );
+      );
 
     /**
      * Windows overrides. Windows doesn't have some strftime variables.
