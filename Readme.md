@@ -95,6 +95,10 @@ Example:
 
 ### Change log
 
+#### 1.1.7 (March 11, 2015)
+
+* Adds url data attribute from today.wisc.edu
+
 #### 1.1.6 (January 27, 2015)
 
 * Adds handling for wp_remote_get errors; returns FALSE (@sterlinganderson)

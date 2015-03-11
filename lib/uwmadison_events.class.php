@@ -251,6 +251,7 @@ class UwmadisonEvents {
         'end_timestamp' => $end_unix,
         'all_day_event' => $event->allDayEvent,
         'link' => $this->eventLink($event),
+        'url' => $event->url,
         'narrative_listing' => $event->narrative_listing,
         'location' => $event->location,
         'uw_map_url' => $event->uw_map_link,
