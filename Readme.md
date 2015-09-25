@@ -93,7 +93,29 @@ Example:
 		// if we want access to the $event object and options
 		add_filter('uwmadison_events_event_html', 'my_uwmadison_events_html', 10, 3);
 
+#### uwmadison_events_group_by filter
+
+The *uwmadison_events_group_by* filter allows you to group events by somethign other than the default, which is based on day_month_year.
+
+Example:
+
+    /**
+     * Group event by just the month
+     */
+    function my_uw_events_group_by($group_by) {
+        return "%B"; // pass a PHP strftime format string
+    }
+    add_filter('uwmadison_events_group_by', 'my_uw_events_group_by');
+    function my_uwmadison_events_html($html, $event, $opts) {
+      $my_event_html = 'Just the title ' . $event->title;
+      return $my_event_html;
+    }
+
 ### Change log
+
+#### 1.1.8 (September 25, 2015)
+
+* Adds filter for changing the default date string to group events by
 
 #### 1.1.7 (March 11, 2015)
 

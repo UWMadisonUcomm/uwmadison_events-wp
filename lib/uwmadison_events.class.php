@@ -236,7 +236,8 @@ class UwmadisonEvents {
     foreach ($data as $event) {
       $start_unix = strtotime($event->startDate);
       $end_unix = strtotime($event->endDate);
-      $day_stamp = strftime('%d_%m_%Y', $start_unix);
+      $group_by = apply_filters('uwmadison_events_group_by', '%d_%m_%Y');
+      $day_stamp = strftime($group_by, $start_unix);
 
       $e = (object) array(
         'id' => $event->id,
