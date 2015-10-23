@@ -411,7 +411,7 @@ class UwmadisonEvents {
     if ( isset($opts['per_page']) && (int) $opts['per_page'] < 1 ) {
       unset($opts['per_page']);
     }
-    else {
+    elseif ( isset($opts['per_page']) ) {
       $opts['per_page'] = (int) $opts['per_page'];
     }
 
@@ -419,7 +419,7 @@ class UwmadisonEvents {
     if ( isset($opts['page']) && (int) $opts['page'] < 1 ) {
       unset($opts['page']);
     }
-    else {
+    elseif ( isset($opts['page']) ) {
       $opts['page'] = (int) $opts['page'];
     }
 

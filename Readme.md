@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.1.9 (October 23, 2015)
+
+* Cleans up a few minor PHP notices
+
 #### 1.1.8 (September 25, 2015)
 
 * Adds filter for changing the default date string to group events by

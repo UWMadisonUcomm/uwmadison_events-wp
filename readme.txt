@@ -3,7 +3,7 @@ Contributors: bshelton229, jnweaver, sterlinganderson
 Tags: uwmadison
 Requires at least: 3.0
 Tested up to: 4.1
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (http://today.wisc.edu)
 
@@ -16,6 +16,9 @@ calendar (http://today.wisc.edu.)
 Contribute via GitHub: https://github.com/UWMadisonUcomm/uwmadison_events-wp
 
 == Changelog ==
+
+= 1.1.9 =
+* Cleans up a few minor PHP notices
 
 = 1.1.8 =
 * Adds filter for changing the default date string to group events by
