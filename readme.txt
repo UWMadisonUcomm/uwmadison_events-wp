@@ -2,8 +2,8 @@
 Contributors: bshelton229, jnweaver, sterlinganderson
 Tags: uwmadison
 Requires at least: 3.0
-Tested up to: 4.1
-Stable tag: 1.1.9
+Tested up to: 4.4.2
+Stable tag: 1.2.0
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (http://today.wisc.edu)
 
@@ -16,6 +16,11 @@ calendar (http://today.wisc.edu.)
 Contribute via GitHub: https://github.com/UWMadisonUcomm/uwmadison_events-wp
 
 == Changelog ==
+
+= 1.2.0 =
+* This is released as a minor update because the widet now properly uses the before_widget and after_widget parameters. In the process, the hard-coded widget_meta CSS class has been dropped. Any styling based on this hook will break unless you use Wordpress's dynamic_sidebar_params filter to add that class yourself.
+
+This version also allows the widget to set the header tag, which default to h2.
 
 = 1.1.9 =
 * Cleans up a few minor PHP notices

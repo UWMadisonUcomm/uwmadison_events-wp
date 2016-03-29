@@ -22,10 +22,12 @@ class UwmadisonEventsWidget extends WP_Widget {
     $url        =     isset($instance['url']) ? $instance['url'] : '';
     $limit      =     isset($instance['limit']) ? $instance['limit'] : '5';
     $title      =     isset($instance['title']) ? $instance['title'] : 'Events';
+    $header_tag      =     isset($instance['header_tag']) ? $instance['header_tag'] : 'h2';
     $grouped    =     isset($instance['grouped']) ? $instance['grouped'] : '0';
 
     // Build the form
     echo $this->generateInput('title', 'Title:', $title);
+    echo $this->generateInput('header_tag', 'Header tag:', $header_tag);
     echo $this->generateInput('url', 'Url:', $url);
     echo $this->generateInput('limit', 'Limit:', $limit);
     echo $this->generateCheckbox('grouped', 'Group results:', $grouped);
@@ -49,6 +51,11 @@ class UwmadisonEventsWidget extends WP_Widget {
       $new_instance['grouped'] = '0';
     }
 
+    // sanitize header_tag
+    if ( isset($new_instance['header_tag']) ) {
+      $new_instance['header_tag'] = sanitize_text_field($new_instance['header_tag']);
+    }
+
     // processes widget options to be saved
     $instance = wp_parse_args( $new_instance, $old_instance );
     return $instance;
@@ -59,14 +66,14 @@ class UwmadisonEventsWidget extends WP_Widget {
    */
   public function widget( $args, $instance ) {
     $instance['source'] = 'widget';
-    $out = '<aside class="widget widget_meta">';
+    $out = $args['before_widget'];
     if ( $parsed = $this->uwe->parse($instance['url'], $instance) ) {
       $out .= $parsed;
     }
     else {
       $out .= "<h2>Error</h2>";
     }
-    $out .= '</aside>';
+    $out .= $args['after_widget'];
     print $out;
   }
 

@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.2.0 (March 29, 2016)
+
+* This is released as a minor update because the widet now properly uses the before_widget and after_widget parameters. In the process, the hard-coded widget_meta CSS class has been dropped. Any styling based on this hook will break unless you use Wordpress's dynamic_sidebar_params filter to add that class yourself.
+
 #### 1.1.9 (October 23, 2015)
 
 * Cleans up a few minor PHP notices
@@ -135,7 +139,9 @@ Example:
 
 #### 1.1.4 (March 2, 2014)
 
-* Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('http://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero).
+* Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('http://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero). 
+
+This version also allows the widget to set the header tag, which default to h2.
 
 #### 1.1.3 (Dec. 30, 2013)
 
