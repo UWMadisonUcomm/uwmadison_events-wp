@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.2.1 (October 19, 2016)
+
+* Adds code to test if the plugin's functions and classes already exist, to help avoid errors in instances where the plugin code might be packaged into a theme or another plugin outside of Wordpress's plugin manager. This release otherwise adds no new or changed featues.
+
 #### 1.2.0 (March 29, 2016)
 
 * This is released as a minor update because the widet now properly uses the before_widget and after_widget parameters. In the process, the hard-coded widget_meta CSS class has been dropped. Any styling based on this hook will break unless you use Wordpress's dynamic_sidebar_params filter to add that class yourself.
