@@ -426,6 +426,15 @@ if ( !class_exists("UwmadisonEvents") ) {
         $opts['page'] = (int) $opts['page'];
       }
 
+      // Validate sart and end
+      // dates should be in YYYY-mm-dd format
+      if ( isset($opts['start']) && !preg_match("/\d\d\d\d-\d\d-\d\d/i", $opts['start']) ) {
+        unset($opts['start']);
+      }
+      if ( isset($opts['end']) && !preg_match("/\d\d\d\d-\d\d-\d\d/i", $opts['end']) ) {
+        unset($opts['end']);
+      }
+
       // Defaults
       $defaults = array(
         'limit' => 5,
@@ -436,6 +445,8 @@ if ( !class_exists("UwmadisonEvents") ) {
         'source' => 'function',
         'grouped' => FALSE,
         'header_tag' => 'h2',
+        'start' => null,
+        'end' => null
         );
 
       // Merge in the defaults

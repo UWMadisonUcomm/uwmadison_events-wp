@@ -113,6 +113,12 @@ Example:
 
 ### Change log
 
+#### 1.2.2 (November 28, 2017)
+
+* Includes start and end params for function that builds a URL query (@kedarjoyner)
+* Adds sponsor and tags as additional items to pull from the API (@kedarjoyner)
+* Ensures limit option gets set - otherwise causes php warning that variable is unset. (@kedarjoyner)
+
 #### 1.2.1 (October 19, 2016)
 
 * Adds code to test if the plugin's functions and classes already exist, to help avoid errors in instances where the plugin code might be packaged into a theme or another plugin outside of Wordpress's plugin manager. This release otherwise adds no new or changed featues.
