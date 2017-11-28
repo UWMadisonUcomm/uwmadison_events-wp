@@ -254,6 +254,8 @@ if ( !class_exists("UwmadisonEvents") ) {
           'all_day_event' => $event->allDayEvent,
           'link' => $this->eventLink($event),
           'url' => $event->url,
+          'sponsor' => $event->sponsor,
+          'tags' => $event->tags,
           'narrative_listing' => $event->narrative_listing,
           'location' => $event->location,
           'uw_map_url' => $event->uw_map_link,
@@ -309,7 +311,7 @@ if ( !class_exists("UwmadisonEvents") ) {
         unset($opts['limit']);
 
       // build URL query from possible query options
-      $query_opts = array('limit','per_page','page');
+      $query_opts = array('limit','per_page','page', 'start', 'end');
       $query = http_build_query(array_intersect_key($opts, array_flip($query_opts)));
 
       if (!empty($query))
@@ -404,7 +406,7 @@ if ( !class_exists("UwmadisonEvents") ) {
       if ( isset($opts['limit']) && (int) $opts['limit'] < 1 ) {
         unset($opts['limit']);
       }
-      else {
+      elseif ( isset($opts['limit']) ) {
         $opts['limit'] = (int) $opts['limit'];
       }
 
