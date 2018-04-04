@@ -113,6 +113,11 @@ Example:
 
 ### Change log
 
+#### 1.2.3 (April 4, 2018)
+
+* Replaces deprecated *create_function* with anonymous function (@kedarjoyner)
+
+
 #### 1.2.2 (November 28, 2017)
 
 * Includes start and end params for function that builds a URL query (@kedarjoyner)
