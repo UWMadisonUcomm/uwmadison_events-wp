@@ -17,7 +17,7 @@ if ( !class_exists("UwmadisonEvents") ) {
      */
     public function __construct() {
       // API Base
-      $this->api_base = 'http://today.wisc.edu';
+      $this->api_base = 'https://today.wisc.edu';
 
       // Plugin name
       $this->plugin_name = 'uwmadison_events';
