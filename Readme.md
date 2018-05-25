@@ -4,25 +4,25 @@ This plugin currently supplies a widget, and theme function.
 
 ### Theme Function
 
-    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
-    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('limit' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
+    <?php uwmadison_events('https://today.wisc.edu/events/tag/arts', array('limit' => 3)) ?>
+    <?php uwmadison_events('https://today.wisc.edu/events/tag/arts', array('limit' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
 
 ### Shortcode
 
 Here are my 4 newest events within post content:
 
-    [uwmadison_events url=http://today.wisc.edu/events/tag/film limit=4]
+    [uwmadison_events url=https://today.wisc.edu/events/tag/film limit=4]
 
 Look at 10 of the film events with a feed title of Film Events, showing descriptions:
 
-    [uwmadison_events url=http://today.wisc.edu/events/tag/film limit=10 grouped=1 title="Film Events" show_description=1]
+    [uwmadison_events url=https://today.wisc.edu/events/tag/film limit=10 grouped=1 title="Film Events" show_description=1]
 
 ### Lower level helper functions
 
 **uwmadison_events_get_remote($url, *$opts*)**
 
     <pre>
-        <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('limit' => 20))) ?>
+        <?php print_r(uwmadison_events_get_remote('https://today.wisc.edu/events/tag/arts', array('limit' => 20))) ?>
     </pre>
 
 **uwmadison_events_get_event_data($event_id)**
@@ -37,12 +37,12 @@ Note: The today.wisc.edu JSON feed does not return a total count, so you will ne
 
 **Pagination with the theme function:**
 
-    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3)) ?>
-    <?php uwmadison_events('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
+    <?php uwmadison_events('https://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3)) ?>
+    <?php uwmadison_events('https://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page' => 3, 'title' => 'Arts Events', 'grouped' => TRUE)) ?>
 
 **Pagination with the lower level function:**
     <pre>
-        <?php print_r(uwmadison_events_get_remote('http://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
+        <?php print_r(uwmadison_events_get_remote('https://today.wisc.edu/events/tag/arts', array('per_page' => 5, 'page => 3'))) ?>
     </pre>
 
 
@@ -113,6 +113,11 @@ Example:
 
 ### Change log
 
+#### 1.2.4 (May 25, 2018)
+
+* Changes the API base URL from http to https
+
+
 #### 1.2.3 (April 4, 2018)
 
 * Replaces deprecated *create_function* with anonymous function (@kedarjoyner)
@@ -150,11 +155,11 @@ Example:
 
 #### 1.1.5 (June 27, 2014)
 
-* Add uw_map_url field to processd output data. If location references a campus building, a map.wisc.edu URL will be returned, e.g. http://www.map.wisc.edu/?initObj=0485
+* Add uw_map_url field to processd output data. If location references a campus building, a map.wisc.edu URL will be returned, e.g. https://www.map.wisc.edu/?initObj=0485
 
 #### 1.1.4 (March 2, 2014)
 
-* Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('http://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero). 
+* Now accepts per_page and page parameters corresponding to the today.wisc.edu API so that pagination can be designed into your integration of the plugin. E.g. uwmadison_events_get_remote('https://www.today.wisc.edu/events/feed/10', array('per_page' => 10, 'page' => 2)) will return events 11-20 from the feed. (Note: The feed does not return a total count, so you will need to account for this in your logic, e.g. check if the number of events returned is less than per_page or zero). 
 
 This version also allows the widget to set the header tag, which default to h2.
 

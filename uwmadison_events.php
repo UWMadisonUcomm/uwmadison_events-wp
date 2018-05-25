@@ -1,13 +1,13 @@
 <?php
 /**
 * @package UwmadisonEvents
-* @version 1.2.3
+* @version 1.2.4
 */
 /*
 Plugin Name: UW-Madison Events
-Description: A wordpress plugin to interface with the UW-Madison events calendar (http://today.wisc.edu)
+Description: A wordpress plugin to interface with the UW-Madison events calendar (https://today.wisc.edu)
 Author: University Marketting at the University of Wisconsin-Madison
-Version: 1.2.3
+Version: 1.2.4
 */
 
 // Load the libraries
