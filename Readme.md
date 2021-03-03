@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.2.5 (March 3, 2021)
+
+* Tested up to Wordpress 5.7
+
 #### 1.2.4 (May 25, 2018)
 
 * Changes the API base URL from http to https

@@ -2,8 +2,8 @@
 Contributors: bshelton229, jnweaver, sterlinganderson, kedarjoyner
 Tags: uwmadison
 Requires at least: 4.0
-Tested up to: 5.4.2
-Stable tag: 1.2.4
+Tested up to: 5.7
+Stable tag: 1.2.5
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (https://today.wisc.edu)
 
@@ -16,6 +16,9 @@ calendar (https://today.wisc.edu.)
 Contribute via GitHub: https://github.com/UWMadisonUcomm/uwmadison_events-wp
 
 == Changelog ==
+
+= 1.2.5 =
+* Tested up to Wordpress 5.7
 
 = 1.2.4 =
 * Changes the API base URL from http to https
