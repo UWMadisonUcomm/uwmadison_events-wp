@@ -258,6 +258,8 @@ if ( !class_exists("UwmadisonEvents") ) {
           'tags' => $event->tags,
           'narrative_listing' => $event->narrative_listing,
           'location' => $event->location,
+          'physical_location' => $event->physical_location,
+          'virtual_url' => $event->virtual_url,
           'uw_map_url' => $event->uw_map_link,
           );
 
@@ -362,7 +364,7 @@ if ( !class_exists("UwmadisonEvents") ) {
     private function transientKey($url) {
       // Needs to be less than 40 characters
       // md5() hex hashes are 32 characters
-      return "uwe_r" . md5($url);
+      return "uwe2_" . md5($url);
     }
 
     /**

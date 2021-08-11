@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.3.0 (August 11, 2021)
+
+* Pulls in two new fields from the today.wisc.edu API: _virtual_url_ and _physical_location_. _virtual_url_ is the URL users enter if their event has an Online option. The legacy _location_ will now also indicate if an event has both a physical location and an online option. The location for a hybrid event will read, e.g. _200 Bascom Hall (also available online)_. The new fields allow you to show both a physical location and a virtual option, each with a link to either the campus map or the URL for the online event. **NOTE:** The default Wordpress tag for showing an event listing does not show any location info. These new fields only apply if you add custom templates in yur child theme.
+
 #### 1.2.5 (March 3, 2021)
 
 * Tested up to Wordpress 5.7
