@@ -258,7 +258,7 @@ if ( !class_exists("UwmadisonEvents") ) {
           'tags' => $event->tags,
           'narrative_listing' => $event->narrative_listing,
           'location' => $event->location,
-          'physical_location' => $event->physical_location,
+          'has_hybrid_format' => $event->hasHybridFormat,
           'virtual_url' => $event->virtual_url,
           'uw_map_url' => $event->uw_map_link,
           );
