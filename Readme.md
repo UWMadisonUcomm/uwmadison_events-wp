@@ -113,6 +113,10 @@ Example:
 
 ### Change log
 
+#### 1.4.0 (August 12, 2021)
+
+* Replaces short-lived _physical_location_ field from 1.3.0 with _has_hybrid_format_ field which is a new boolean that indicates if an even has both a phycial and virtual location. If an event has only a physical location, the location field will show the location (note that a user can enter the word _Online_ or _Virtual_ in the freeform location field at today.wisc.edu - rare, but possible). If an event has only an online format, the location field will read _Online_ (as prior to 1.3.0). If an event is hybrid, the location will show the physical location. The virtual_url field will have the online stream or website for details. **NOTE:** The default Wordpress tag for showing an event listing does not show any location info. The new _has_hybrid_format_ only applies if you add custom templates in yur child theme.
+
 #### 1.3.0 (August 11, 2021)
 
 * Pulls in two new fields from the today.wisc.edu API: _virtual_url_ and _physical_location_. _virtual_url_ is the URL users enter if their event has an Online option. The legacy _location_ will now also indicate if an event has both a physical location and an online option. The location for a hybrid event will read, e.g. _200 Bascom Hall (also available online)_. The new fields allow you to show both a physical location and a virtual option, each with a link to either the campus map or the URL for the online event. **NOTE:** The default Wordpress tag for showing an event listing does not show any location info. These new fields only apply if you add custom templates in yur child theme.
