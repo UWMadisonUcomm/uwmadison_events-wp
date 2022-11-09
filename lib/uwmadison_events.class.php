@@ -380,7 +380,7 @@ if ( !class_exists("UwmadisonEvents") ) {
       $out = array();
       $date_formats = apply_filters('uwmadison_events_date_formats', $this->dateFormats($unix_time));
       foreach ($date_formats as $name => $format) {
-        $out[$name] = date($format, $unix_time);
+        $out[$name] = $format;
       }
       return $out;
     }
