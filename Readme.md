@@ -74,7 +74,7 @@ Example:
 
 		return $date_formats;
 	}
-	add_filter('uwmadison_events_date_formats', 'my_uw_events_date_formats', 10, 2);
+	add_filter('uwmadison_events_date_formats', 'my_uw_events_date_formats', 10, 1);
 
 #### uwmadison_events_event_html filter
 
