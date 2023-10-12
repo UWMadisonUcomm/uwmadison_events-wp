@@ -238,7 +238,14 @@ if ( !class_exists("UwmadisonEvents") ) {
         $start_unix = strtotime($event->startDate);
         $end_unix = strtotime($event->endDate);
         $group_by = apply_filters('uwmadison_events_group_by', 'd_m_Y');
-        $day_stamp = date($group_by, $start_unix);
+
+        // if format contains %, use strftime and issue DEPRECATION
+        if (strpos($group_by, "%") !== false) {
+          trigger_error("Support for strftime will be removed in version 2.0 of the UW events plugin. Please return a DateTime::format() string instead.", E_USER_DEPRECATED);
+          $day_stamp = strftime($group_by, $start_unix);
+        } else {
+          $day_stamp = date($group_by, $start_unix);
+        }
 
         $e = (object) array(
           'id' => $event->id,
@@ -380,7 +387,13 @@ if ( !class_exists("UwmadisonEvents") ) {
       $out = array();
       $date_formats = apply_filters('uwmadison_events_date_formats', $this->dateFormats($unix_time));
       foreach ($date_formats as $name => $format) {
-        $out[$name] = $format;
+        // if format contains %, use strftime and issue DEPRECATION
+        if (strpos($format, "%") !== false) {
+          trigger_error("Support for strftime will be removed in version 2.0 of the UW events plugin. Please return a DateTime::format() string instead.", E_USER_DEPRECATED);
+          $out[$name] = strftime($format, $unix_time);
+        } else {
+          $out[$name] = $format;
+        }
       }
       return $out;
     }
@@ -469,9 +482,9 @@ if ( !class_exists("UwmadisonEvents") ) {
         // Used to render the date in each <li> for individual events
         'default' => '<span class="uwmadison_event_date">'.date('m/d/y', $unix_time) .'</span>',
         // Used to render the heading for each date group
-        'group_header' => '<span class="uwmadison_event_group_date">'.date('M j').'</span>',
+        'group_header' => '<span class="uwmadison_event_group_date">'.date('M j', $unix_time).'</span>',
         // Used to render the date/time next to individual events in the grouped view
-        'group_item' => '<span class="uwmadison_event_date">'.date('g:i A').'</span>',
+        'group_item' => '<span class="uwmadison_event_date">'.date('g:i A', $unix_time).'</span>',
         );
 
       return $formats;
