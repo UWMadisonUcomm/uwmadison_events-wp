@@ -3,7 +3,7 @@ Contributors: bshelton229, jnweaver, sterlinganderson, kedarjoyner
 Tags: uwmadison
 Requires at least: 5.0
 Tested up to: 6.1
-Stable tag: 2.0.0
+Stable tag: 1.5.0
 
 A WordPress plugin to interface with the UW-Madison Events Calendar (https://today.wisc.edu)
 
@@ -16,11 +16,11 @@ calendar (https://today.wisc.edu.)
 Contribute via GitHub: https://github.com/UWMadisonUcomm/uwmadison_events-wp
 
 == Changelog ==
-= 2.0.0 =
-**Breaking changes**
-This version replaces _strftime()_ calls (deprecated in PHP 8.1; to be removed in PHP 9) with _date()_. 
+= 1.5.0 =
+**Deprecated**
+This version deprecates _strftime()_ calls (deprecated in PHP 8.1; to be removed in PHP 9) with _date()_. 
 
-Implementations that use the _uwmadison_events_group_by_ or _uwmadison_events_date_formats_ filters will need to update those filters to also use date() formats.
+Implementations that use the _uwmadison_events_group_by_ or _uwmadison_events_date_formats_ filters should update those filters to also use date() formats.
 
 For the _uwmadison_events_group_by_ filter, return a [PHP datetime format](https://www.php.net/manual/en/datetime.format.php) instead of a _strftime()_ format string.
 

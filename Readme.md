@@ -109,14 +109,14 @@ Example:
 
 ### Change log
 
-#### 2.0.0 (November 9, 2022)
+#### 1.5.0 (October 12, 2023)
 
 **Breaking changes**
-This version replaces *strftime()* calls (deprecated in PHP 8.1; to be removed in PHP 9) with *date()*. 
+This version deprecates _strftime()_ calls (deprecated in PHP 8.1; to be removed in PHP 9) with _date()_. 
 
-Implementations that use the *uwmadison_events_group_by* or *uwmadison_events_date_formats* filters will need to update those filters to also use date() formats.
+Implementations that use the _uwmadison_events_group_by_ or _uwmadison_events_date_formats_ filters should update those filters to also use date() formats.
 
-For the *uwmadison_events_group_by* filter, return a [PHP datetime format](https://www.php.net/manual/en/datetime.format.php) instead of a *strftime()* format string.
+For the _uwmadison_events_group_by_ filter, return a [PHP datetime format](https://www.php.net/manual/en/datetime.format.php) instead of a _strftime()_ format string.
 
 For the *uwmadison_events_date_formats* filter, it now passes an arugment for `$unix_time` which is the Unix time integer representation of an events start date and time. When overriding or adding to the formats array, use `date()` with the passed `$unix_time` value to generate your desired date format string.
 
