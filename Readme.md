@@ -53,28 +53,28 @@ Note: The today.wisc.edu JSON feed does not return a total count, so you will ne
 
 There are three date/time strings rendered by default. The default string is rendered for each event in the standard, non-grouped, view. A group item time is rendered for each event in the grouped view. The group header string is used for the date header for the group when rendering the list in group view.
 
-These are all strftime formatted strings which can be overriden with the uwmadison_events_date_formats filter. The filtered object is an associative array with three default keys, 'default', 'group_item', and 'group_header.' You may override these, as well as add your own strftime keys. Each item will be parsed with strftime with each event's startDate, and will be made avialable in the event object. If you are going to be overriding the event html manually (covered later), it is still better to modify or add times to this array, which will be made available to you when you filter the event html. This is because this filter will take into account Wordpress's convention of always setting its timezone to UTC during runtime.
+These are all strings that use PHP date() formats which can be overriden with the uwmadison_events_date_formats filter. The filtered object is an associative array with three default keys, 'default', 'group_item', and 'group_header.' You may override these, as well as add your own format keys. Each array item returns a string, and will be made avialable in the event object. If you are going to be overriding the event html manually (covered later), it is still better to modify or add times to this array, which will be made available to you when you filter the event html. This is because this filter will take into account Wordpress's convention of always setting its timezone to UTC during runtime.
 
 Example:
 
 	/**
 	 * Filter the UW-Madison Events date formats
 	 */
-	function my_uw_events_date_formats($date_formats) {
+	function my_uw_events_date_formats($date_formats, $unix_time) {
 		// Change the default time beside each event
-		$date_formats['default'] = '%D (day of week: %a)';
+		$date_formats['default'] = date('m/d/y', $unix_time) . ' (day of week: ' . date('l', $unix_time) . ')';
 
 		// Add a custom time format, made available in the $event
 		// object passed to other filters
-		$date_formats['my_time'] = 'My Time %F';
+		$date_formats['my_time'] = 'My Time ' . date('Y-m-d', $unix_time);
 
 		// Custom header format for each group of events
 		// in the grouped event view
-		$date_formats['group_header'] = 'On - %a';
+		$date_formats['group_header'] = 'On - '. date('D', $unix_time);
 
 		return $date_formats;
 	}
-	add_filter('uwmadison_events_date_formats', 'my_uw_events_date_formats');
+	add_filter('uwmadison_events_date_formats', 'my_uw_events_date_formats', 10, 1);
 
 #### uwmadison_events_event_html filter
 
@@ -103,15 +103,22 @@ Example:
      * Group event by just the month
      */
     function my_uw_events_group_by($group_by) {
-        return "%B"; // pass a PHP strftime format string
+        return "F"; // pass a PHP date() format string
     }
     add_filter('uwmadison_events_group_by', 'my_uw_events_group_by');
-    function my_uwmadison_events_html($html, $event, $opts) {
-      $my_event_html = 'Just the title ' . $event->title;
-      return $my_event_html;
-    }
 
 ### Change log
+
+#### 1.5.0 (October 12, 2023)
+
+**Breaking changes**
+This version deprecates _strftime()_ calls (deprecated in PHP 8.1; to be removed in PHP 9) with _date()_. 
+
+Implementations that use the _uwmadison_events_group_by_ or _uwmadison_events_date_formats_ filters should update those filters to also use date() formats.
+
+For the _uwmadison_events_group_by_ filter, return a [PHP datetime format](https://www.php.net/manual/en/datetime.format.php) instead of a _strftime()_ format string.
+
+For the *uwmadison_events_date_formats* filter, it now passes an arugment for `$unix_time` which is the Unix time integer representation of an events start date and time. When overriding or adding to the formats array, use `date()` with the passed `$unix_time` value to generate your desired date format string.
 
 #### 1.4.0 (August 12, 2021)
 
